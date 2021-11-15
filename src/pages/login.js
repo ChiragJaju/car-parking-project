@@ -1,3 +1,5 @@
+// useState from React
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React, { useState } from "react";
 
 function Copyright(props) {
   return (
@@ -32,15 +35,33 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInSide() {
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passMatch, setPassMatch] = useState();
+
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
+  }
+  const handlePass = (event) => {
+    setPassword(event.target.value);
+  }
+
+  const data = {
+    email, password
+  };
+
+  // check if pass matches with corresponding email
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    console.log(data);
+    // const data = new FormData(event.currentTarget);
+    // // eslint-disable-next-line no-console
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
   };
 
   return (
@@ -94,6 +115,7 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={handleEmail}
               />
               <TextField
                 margin="normal"
@@ -104,10 +126,7 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                onChange={handlePass}
               />
               <Button
                 type="submit"
@@ -119,6 +138,8 @@ export default function SignInSide() {
               </Button>
               <Grid container>
                 <Grid item xs>
+
+                  {/* add redirect link */}
                   <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
@@ -128,6 +149,11 @@ export default function SignInSide() {
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
+              </Grid>
+              <Grid>
+              <a href="https://localhost:3000/auth/google">
+                {"Login with "} &nbsp;<i with i class="fab fa-google"></i>
+              </a>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
             </Box>
