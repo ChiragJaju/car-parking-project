@@ -14,6 +14,6 @@ public class Building
     ArrayList<ParkingLot> parkingLot = new ArrayList<>();
 
     public boolean canAdd(User user) {
-        return true;
+        return true && true;
     }
 }
