@@ -13,7 +13,7 @@ public class UserDAO {
     String firebase_baseUrl = "https://oops-d07bb-default-rtdb.asia-southeast1.firebasedatabase.app/";
     String firebase_apiKey = "AIzaSyDzCSoGGjY2b92wXOH0IzZx4ylTCs4aJbc";
     Firebase firebase = new Firebase( firebase_baseUrl );
-
+    Building building = new Building();
     public UserDAO() throws FirebaseException {
     }
         public String getAllEmployees(String location) throws FirebaseException, UnsupportedEncodingException {
@@ -28,7 +28,7 @@ public class UserDAO {
         int x=instance.users.indexOf(user);
         return x != -1;
     }
-    public void addUser(User user,String location) throws FirebaseException, UnsupportedEncodingException {
+    public String addUser(User user,String location,String jsonData) throws FirebaseException, UnsupportedEncodingException {
         String jsonStr="";
         com.fasterxml.jackson.databind.ObjectMapper Obj = new ObjectMapper();
         try {
@@ -38,7 +38,12 @@ public class UserDAO {
         catch (IOException e) {
             e.printStackTrace();
         }
-        location=location+"/USERS";
-        firebase.put(location,jsonStr);
+        if(building.canAdd(user)) {
+            location = location + "/USERS";
+            firebase.put(location, jsonStr);
+            return "{"+"\"value\":\"Done\""+"}";
+        }
+        else
+            return "{"+"\"value\":\"Failed\""+"}";
     }
 }

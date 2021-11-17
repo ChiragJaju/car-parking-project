@@ -12,4 +12,8 @@ public class Building
     private final int confBook=100;
     ArrayList<Worker> workers = new ArrayList<>();
     ArrayList<ParkingLot> parkingLot = new ArrayList<>();
+
+    public boolean canAdd(User user) {
+        return true;
+    }
 }

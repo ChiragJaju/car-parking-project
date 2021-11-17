@@ -1,6 +1,9 @@
 package springboot;
 public class Car
 {
-    private String register;
-
+    public String register;
+    Car(String reg)
+    {
+        this.register=reg;
+    }
 }
