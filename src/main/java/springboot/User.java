@@ -8,11 +8,11 @@ public class User
     public double balance;
     public  Address Addrs;
     public Car car_data;
-    User(String k,String m)
-    {
-        this.l_name=k;
-        this.email=m;
-        car_data=new Car("hello");
+    public Ticket parkingTicket;
+    User(String k,String m) {
+        this.l_name = k;
+        this.email = m;
+        car_data = new Car("hello");
     }
     public String toString()
     {
