@@ -11,5 +11,6 @@ public class ParkingLot
     Worker Worker = new Worker();
 
     public boolean isfree(Date checkIn, Date checkOut) {
+        return true;
     }
 }

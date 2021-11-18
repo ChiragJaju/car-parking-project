@@ -1,6 +1,5 @@
 package springboot;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,4 +70,7 @@ public class Building
         return data;
     }
 
+    public String getSlots(String checkIn, String checkOut, String date) {
+        return checkIn;
+    }
 }

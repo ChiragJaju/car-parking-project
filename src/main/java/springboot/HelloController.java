@@ -49,7 +49,7 @@ public class HelloController {
     @GetMapping("/data/slots")
     public String slots(@RequestBody String location,@RequestBody String checkIn, @RequestBody String checkOut,@RequestBody String date) throws firebase4j.error.FirebaseException, UnsupportedEncodingException {
         Building building = dao.parking.getBuilding(location);
-        building.getSlots(checkIn,checkOut,date);
+        return building.getSlots(checkIn,checkOut,date);
     }
 
 
