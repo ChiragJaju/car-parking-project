@@ -18,31 +18,28 @@ public class Building
     private final int confBook=100;
     ArrayList<Worker> workers = new ArrayList<>();
     ArrayList<ParkingLot> parkingLot = new ArrayList<>();
-
+    String location;
+    float latitude,longitude;
     // public boolean canAdd(User user)
     // {
     //     return true && true;
     // }
-    public static boolean already_exists(User x)
+    public boolean already_exists(User x)
     {
-        for(int i =0;i<users.size();i++)
-        {
-            if(users.get(i).u_name == x.u_name)
-            {
+        for (User user : users) {
+            if (user.u_name.equals(x.u_name)) {
                 return false;
             }
-            if(users.get(i).email == x.email)
-            {
+            if (user.email.equals(x.email)) {
                 return false;
             }
-            if(users.get(i).mobile == x.mobile)
-            {
+            if (user.mobile.equals(x.mobile)) {
                 return false;
             }
         }
         return true;
-    String location;
-    float latitude,longitude;
+    }
+
     public Building(String location,float x,float y)
     {
         this.location=location;
