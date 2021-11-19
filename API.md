@@ -10,3 +10,6 @@ body:{
   "Addrs": null,
   "car_data": null
   }`
+- /user/login
+`body:{"username":"","pwd":""}`
+returns - `{"value":"failed"}` is login failed else returns User details

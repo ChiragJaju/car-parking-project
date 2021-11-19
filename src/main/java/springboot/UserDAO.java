@@ -1,5 +1,6 @@
 package springboot;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import firebase4j.error.FirebaseException;
 import firebase4j.service.Firebase;
@@ -13,22 +14,13 @@ public class UserDAO {
     String firebase_baseUrl = "https://oops-d07bb-default-rtdb.asia-southeast1.firebasedatabase.app/";
     String firebase_apiKey = "AIzaSyDzCSoGGjY2b92wXOH0IzZx4ylTCs4aJbc";
     Firebase firebase = new Firebase( firebase_baseUrl );
-    Building building = new Building();
+    ParkingSystem parking=new ParkingSystem();
     public UserDAO() throws FirebaseException {
     }
         public String getAllEmployees(String location) throws FirebaseException, UnsupportedEncodingException {
         return firebase.get(location+"/USERS").getRawBody();
     }
-    public boolean checkUnique(User user,String location) throws FirebaseException, UnsupportedEncodingException {
-        Building instance;
-        String data=firebase.get("/"+location).getRawBody();
-        Gson z= new Gson();
-        System.out.print(data);
-        instance=z.fromJson(data,Building.class);
-        int x=instance.users.indexOf(user);
-        return x != -1;
-    }
-    public String addUser(User user,String location,String jsonData) throws FirebaseException, UnsupportedEncodingException {
+    public String addUser(User user,String location,String jsonData) throws FirebaseException, UnsupportedEncodingException, JsonProcessingException {
         String jsonStr="";
         com.fasterxml.jackson.databind.ObjectMapper Obj = new ObjectMapper();
         try {
@@ -38,9 +30,9 @@ public class UserDAO {
         catch (IOException e) {
             e.printStackTrace();
         }
+        Building building=parking.getBuilding(location);
         if(building.canAdd(user)) {
-            location = location + "/USERS";
-            firebase.put(location, jsonStr);
+            building.addUser(user);
             return "{"+"\"value\":\"Done\""+"}";
         }
         else
