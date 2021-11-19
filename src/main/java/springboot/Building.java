@@ -36,4 +36,37 @@ public class Building
         }
         return true;
     }
+    public static void add_user(User x)
+    {
+        users.add(x);
+    }
+    public static boolean login(User x)
+    {
+        for(int i = 0;i<users.size();i++)
+        {
+            if(users.get(i).u_name == x.u_name)
+            {
+                if(users.get(i).pwd == x.pwd)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public void add_user_waiting(User x)
+    {
+        waitingList.add(x);
+    }
+    public Double Total_cost(String x, String y)
+    {
+        String begin = x.substring(0,2);
+        String end = y.substring(0,2);
+
+        Double z;
+        z = (Double.valueOf(x)- Double.valueOf(y))*25;
+        
+        return z;
+    }
+
 }
