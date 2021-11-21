@@ -1,30 +1,42 @@
 import AuthContext from "./context/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Login from "./pages/login";
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Routes,
   Switch,
 } from "react-router-dom";
 import Signup from "./pages/signup";
 import Home from "./pages/home";
+import Signout from "./pages/signout";
 
 function App() {
   const { test } = useContext(AuthContext);
-  const loggedIn = false;
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <Router>
       <Switch>
         <Route path="/login">
-          {loggedIn !== true ? <Login /> : <Redirect to="/"></Redirect>}
+          {loggedIn !== true ? (
+            <Login setLoggedIn={setLoggedIn} />
+          ) : (
+            <Redirect to="/"></Redirect>
+          )}
         </Route>
         <Route path="/signup">
-          {loggedIn !== true ? <Signup /> : <Redirect to="/"></Redirect>}
+          {loggedIn !== true ? (
+            <Signup setLoggedIn={setLoggedIn} />
+          ) : (
+            <Redirect to="/"></Redirect>
+          )}
         </Route>
         <Route path="/" exact>
-          {loggedIn !== true ? <Login /> : <Home />}
+          {loggedIn === true ? <Home /> : <Redirect to="/login"></Redirect>}
+        </Route>
+        <Route path="/logout">
+          <Signout setLoggedIn={setLoggedIn} />
         </Route>
 
         {/* <Route path="/signup">

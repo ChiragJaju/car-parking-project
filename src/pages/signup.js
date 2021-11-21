@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
 
   const [firstName, setFirstName] = useState("");
@@ -43,6 +43,7 @@ export default function SignUp() {
   const [address, setAddress] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [carNumber, setCarNumber] = useState("");
+  const [isDataValid, setIsDataValid] = useState();
 
   const [doesPassMatch, setDoesPassMatch] = useState();
 
@@ -90,11 +91,21 @@ export default function SignUp() {
       firstName,
       lastName,
       email,
+      username,
       password,
       address,
       mobileNumber,
       carNumber,
     };
+    //send all this data
+    //get response whether username,email and phonenumber is unique
+    //if all unique then get all his data and get loggedin
+    // if(IsUserNew === true){
+    //   props.setLoggedIn(true);
+    //  isDataValid(true);
+    // }
+    // else {isDataValid(false)}
+    props.setLoggedIn(true);
     setDoesPassMatch(true);
     console.log(data);
   };
@@ -251,6 +262,11 @@ export default function SignUp() {
             {doesPassMatch === false && (
               <Typography component="h3" variant="h6" color="error">
                 Password doesn't Match!
+              </Typography>
+            )}
+            {isDataValid === false && (
+              <Typography component="h3" variant="h6" color="error">
+                User Already Exists. Check your details.
               </Typography>
             )}
           </Box>
