@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ParkingSystem {
-    Map<String, Object> data = new LinkedHashMap<String, Object>();
+    static Map<String, Object> data = new LinkedHashMap<String, Object>();
 
     public ParkingSystem() {
         Building b1 = new Building("A", 0, 0);
@@ -27,7 +27,7 @@ public class ParkingSystem {
         data.put(build.location, build);
     }
 
-    public void updateFirebase() throws JsonProcessingException, firebase4j.error.FirebaseException, firebase4j.error.JacksonUtilityException, UnsupportedEncodingException {
+    public static void updateFirebase() throws JsonProcessingException, firebase4j.error.FirebaseException, firebase4j.error.JacksonUtilityException, UnsupportedEncodingException {
         ObjectMapper k = new ObjectMapper();
         Map<String, Object> update = new HashMap<String, Object>();
         for (Map.Entry mapElement : data.entrySet()) {

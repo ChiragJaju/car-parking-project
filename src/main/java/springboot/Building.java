@@ -1,5 +1,6 @@
 package springboot;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 public class Building
 {
@@ -19,7 +21,10 @@ public class Building
     ArrayList<ParkingLot> parkingLot = new ArrayList<>();
     String location;
     float latitude,longitude;
-  
+
+//    public static void login(String username, String pwd) {
+//    }
+
     public boolean already_exists(User x)
     {
         for (User user : users) {
@@ -63,7 +68,7 @@ public class Building
         String end = y.substring(0,2);
 
         Double z;
-        z = ((Double.valueOf(x)- Double.valueOf(y))*charge)+100;
+        z = ((Double.parseDouble(x)- Double.parseDouble(y))*charge)+100;
         
         return z;
     }
@@ -82,8 +87,8 @@ public class Building
         com.fasterxml.jackson.databind.ObjectMapper Obj = new ObjectMapper();
         return Obj.writeValueAsString(this);
     }
-    public ArrayList<ParkingLot> getParkingLot(String in,String out,String date) throws ParseException {
-        SimpleDateFormat parser = new SimpleDateFormat("HH:mm");
+    public String getSlots(String in, String out) throws ParseException {
+        SimpleDateFormat parser = new SimpleDateFormat("dd-M-yyyy hh:mm:ss a");
         Date checkIn = parser.parse(in);
         Date checkOut = parser.parse(out);
         ArrayList<ParkingLot> data= new ArrayList<ParkingLot>();
@@ -97,10 +102,14 @@ public class Building
                 }
             }
         }
-        return data;
+        String ans=new Gson().toJson(data);
+        return ans;
     }
 
-    public String getSlots(String checkIn, String checkOut, String date) {
-        return checkIn;
+
+    public void addUser(User user) throws firebase4j.error.JacksonUtilityException, firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException {
+        users.add(user);
+        ParkingSystem.updateFirebase();
     }
+
 }

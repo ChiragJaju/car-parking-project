@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.util.Map;
 
 @RestController
 public class HelloController {
@@ -32,14 +34,14 @@ public class HelloController {
         return jsonStr;
     }
     @PostMapping("/user/add/{location}")
-    public String addUser(@RequestBody String jsonData, @PathVariable String location) throws firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException {
+    public String addUser(@RequestBody String jsonData, @PathVariable String location) throws firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException, firebase4j.error.JacksonUtilityException {
         System.out.println(jsonData);
         User user= new Gson().fromJson(jsonData,User.class);
         return dao.addUser(user,location,jsonData);
     }
     @GetMapping("/login")
-    public String login(@RequestBody String username,@RequestBody String pwd) throws JsonProcessingException {
-        User user=Building.login(username,pwd);
+    public String login(@RequestBody Map<String,String> data) throws JsonProcessingException {
+        User user=Building.login(data.get("username").,data.get("pwd"));
         if(user== null) {
             return "{"+"\"value\":\"Failed\""+"}";
         }
@@ -47,10 +49,8 @@ public class HelloController {
     }
     //creating functions for module 2 ie Dashboard
     @GetMapping("/data/slots")
-    public String slots(@RequestBody String location,@RequestBody String checkIn, @RequestBody String checkOut,@RequestBody String date) throws firebase4j.error.FirebaseException, UnsupportedEncodingException {
-        Building building = dao.parking.getBuilding(location);
-        return building.getSlots(checkIn,checkOut,date);
+    public String slots(@RequestBody Map<String,String> data) throws UnsupportedEncodingException, ParseException {
+        Building building = dao.parking.getBuilding(data.get("location"));
+        return building.getSlots(data.get("checkIn"),data.get("checkOut"));
     }
-
-
 }

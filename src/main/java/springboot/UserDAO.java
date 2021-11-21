@@ -20,7 +20,7 @@ public class UserDAO {
         public String getAllEmployees(String location) throws FirebaseException, UnsupportedEncodingException {
         return firebase.get(location+"/USERS").getRawBody();
     }
-    public String addUser(User user,String location,String jsonData) throws FirebaseException, UnsupportedEncodingException, JsonProcessingException {
+    public String addUser(User user,String location,String jsonData) throws FirebaseException, UnsupportedEncodingException, JsonProcessingException, firebase4j.error.JacksonUtilityException {
         String jsonStr="";
         com.fasterxml.jackson.databind.ObjectMapper Obj = new ObjectMapper();
         try {
