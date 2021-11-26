@@ -53,4 +53,6 @@ public class HelloController {
         Building building = dao.parking.getBuilding(data.get("location"));
         return building.getSlots(data.get("checkIn"),data.get("checkOut"));
     }
+    // creating functions for module 3
+
 }

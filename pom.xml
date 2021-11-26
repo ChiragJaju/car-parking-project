@@ -16,11 +16,6 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
 	</repositories>
 
 	<dependencies>
@@ -35,7 +30,11 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>java-http-client</artifactId>
+			<version></version>
+		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
