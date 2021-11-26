@@ -44,20 +44,21 @@ public class Building
     {
         users.add(x);
     }
-    // public static User login(String x,String y)
-    // {
-    //     for(int i = 0;i<users.size();i++)
-    //     {
-    //         if(users.get(i).u_name == x.u_name)
-    //         {
-    //             if(users.get(i).pwd == x.pwd)
-    //             {
-    //                 return x;
-    //             }
-    //         }
-    //     }
-        
-    // }
+    public static User login(String u,String p)
+    {
+        for(int i = 0;i<users.size();i++)
+        {
+            if(users.get(i).u_name == u)
+            {
+                if(users.get(i).pwd == p)
+                {
+                    return users.get(i); 
+                }
+            }
+        }
+        return null;
+    
+    }
     public void add_user_waiting(User x)
     {
         waitingList.add(x);
