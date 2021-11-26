@@ -1,44 +1,27 @@
 // useState from React
 import React, { useState, useContext } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Paper,
+  Box,
+  Grid,
+  Typography,
+} from "@mui/material";
+import LockOutlined from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { User } from "../components/Data";
 import AuthContext from "../context/AuthContext";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const theme = createTheme();
 
 export default function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passMatch, setPassMatch] = useState();
-  const { setUserData } = useContext(AuthContext);
+  const { setUserData, setWhatToShow } = useContext(AuthContext);
 
   const handleUsername = (event) => {
     setUsername(event.target.value);
@@ -51,13 +34,19 @@ export default function Login(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    props.setLoggedIn(true);
-
+    if (username === "admin") {
+      props.setLoggedIn("admin");
+      setWhatToShow("location");
+    } else {
+      props.setLoggedIn("user");
+      setWhatToShow("BookSlot");
+    }
     const data = {
       username,
       password,
+      name: User[0].name,
     };
+    setUserData(data);
     //Axios send data
     //receive response
     //according to that set PassMatch
@@ -98,7 +87,7 @@ export default function Login(props) {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
+              <LockOutlined />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in

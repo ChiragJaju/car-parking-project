@@ -1,21 +1,22 @@
 import { DataLocations } from "../Data";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SlotCard from "./Cards/SlotCard";
 import { Grid } from "@material-ui/core";
 import EditSlot from "./Cards/EditSlot";
 
-const Slot = () => {
-  var slotsToShow = [];
+const Slot = (props) => {
   const [editSlot, setEditSlot] = useState(false);
   const [Locations, setLocations] = useState(DataLocations);
+
   Locations.forEach((location) => {
     location.slots.forEach((slot) => {
-      slotsToShow.push({
+      props.slotsToShow.push({
         location,
         slot,
       });
     });
   });
+
   if (editSlot === false) {
     return (
       <Grid
@@ -24,7 +25,7 @@ const Slot = () => {
         justifyContent="flex-start"
         alignItems="flex-start"
       >
-        {slotsToShow.map((slot) => {
+        {props.slotsToShow.map((slot) => {
           return (
             <Grid item xs={6}>
               <SlotCard
@@ -36,7 +37,6 @@ const Slot = () => {
             </Grid>
           );
         })}
-        ;
       </Grid>
     );
   } else {

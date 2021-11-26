@@ -40,8 +40,8 @@ export default function OutlinedCard(props) {
   };
   const startDelete = () => {
     // console.log(props.slot);
-
-    props.locations.filter((x) => {
+    var locations = props.locations;
+    locations.filter((x) => {
       if (x.name === props.slot.location.name) {
         // console.log(x.slots);
         var xx = x.slots.filter((y) => {
@@ -52,7 +52,7 @@ export default function OutlinedCard(props) {
       } else return false;
     });
     // console.log(props.locations);
-    props.setLocations(props.locations);
+    props.setLocations(locations);
   };
   const card = (
     <div>

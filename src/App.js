@@ -19,21 +19,28 @@ function App() {
     <Router>
       <Switch>
         <Route path="/login">
-          {loggedIn !== true ? (
+          {loggedIn === false ? (
             <Login setLoggedIn={setLoggedIn} />
           ) : (
             <Redirect to="/"></Redirect>
           )}
         </Route>
         <Route path="/signup">
-          {loggedIn !== true ? (
+          {loggedIn === false ? (
             <Signup setLoggedIn={setLoggedIn} />
           ) : (
             <Redirect to="/"></Redirect>
           )}
         </Route>
         <Route path="/" exact>
-          {loggedIn === true ? <Home /> : <Redirect to="/login"></Redirect>}
+          {loggedIn === "user" && <Home loggedIn={loggedIn} />}
+          {loggedIn === "admin" && <Home loggedIn={loggedIn} />}
+          {loggedIn === false && <Login setLoggedIn={setLoggedIn} />}
+          {/* {loggedIn === "admin" ? (
+            <Home loggedIn={loggedIn} />
+          ) : (
+            <Redirect to="/login"></Redirect>
+          )}  */}
         </Route>
         <Route path="/logout">
           <Signout setLoggedIn={setLoggedIn} />
