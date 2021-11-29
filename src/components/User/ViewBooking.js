@@ -48,7 +48,11 @@ export default function OutlinedCard(props) {
       alignItems="flex-start"
     >
       {toShow.map((y) => {
-        return <ViewingCard details={y}> </ViewingCard>;
+        return (
+          <Grid item xs={6}>
+            <ViewingCard details={y}> </ViewingCard>
+          </Grid>
+        );
       })}
     </Grid>
   );

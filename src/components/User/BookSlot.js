@@ -109,7 +109,7 @@ const BookSlot = (props) => {
           var x = booking.checkIn;
           var y = booking.checkOut;
           var a = inTime.getTime();
-          var b = outTime;
+          var b = outTime.getTime();
           if (
             (a - x) * (a - y) < 0 ||
             (b - x) * (b - y) < 0 ||

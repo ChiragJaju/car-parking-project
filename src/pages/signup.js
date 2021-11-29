@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import {
   Avatar,
   Button,
@@ -75,7 +76,7 @@ export default function SignUp(props) {
   const handleCarNumber = (event) => {
     setCarNumber(event.target.value);
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (password !== rePassword) {
@@ -97,6 +98,16 @@ export default function SignUp(props) {
       mobileNumber,
       carNumber,
     };
+    const sendData = {
+      l_name: lastName,
+      email: email,
+      mobile: mobileNumber,
+      u_name: username,
+      pwd: password,
+    };
+    // const res = await axios.post("http://localhost:8080/user/add/A", sendData);
+    // console.log(res);
+
     //send all this data
     //get response whether username,email and phonenumber is unique
     //if all unique then get all his data and get loggedin

@@ -1,18 +1,21 @@
 import { useContext } from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+  Grid,
+} from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import AuthContext from "../../../context/AuthContext";
 import { User } from "../../Data";
 const useStyles = makeStyles((theme) => ({
   card: {
-    margin: "2.5vw 2.5vw",
+    margin: ".5vw .5vw ",
     backgroundColor: "#524c4c",
-    // width: "50vw",
+    width: "41vw",
     padding: "20px",
     textColor: "#ffffff",
   },
@@ -33,11 +36,72 @@ const useStyles = makeStyles((theme) => ({
 
 export default function OutlinedCard(props) {
   const classes = useStyles();
-  console.log(props.details);
+  console.log(props.details.details);
+  const x = props.details.details;
+  const duration = Math.ceil(
+    (x.inputTime.checkOut.getTime() - x.inputTime.checkIn.getTime()) / 3600000
+  );
+  // const x = props.details.details;
   const { setSlotToEdit, userData } = useContext(AuthContext);
   const card = (
     <div>
-      <CardContent></CardContent>
+      <CardContent>
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+        >
+          <Grid item xs={6}>
+            <Typography variant="h4" sx={{ color: "#ffffff" }}>
+              Location: {x.location.name}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ textAlign: "right" }}>
+            <Typography variant="h2" sx={{ color: "#ffffff" }}>
+              {x.slot.number}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+              Date: {x.inputTime.checkIn.getDate()}/
+              {x.inputTime.checkIn.getMonth() + 1}/
+              {x.inputTime.checkIn.getFullYear()}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ marginTop: "20px" }}>
+            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+              Check In:
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ textAlign: "right", marginTop: "20px" }}>
+            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+              Check Out:
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sx={{}}>
+            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+              {x.inputTime.checkIn.toLocaleTimeString("en-US")}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ textAlign: "right" }}>
+            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+              {x.inputTime.checkOut.toLocaleTimeString("en-US")}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ marginTop: "20px" }}>
+            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+              Duration of parking:
+              {duration}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ textAlign: "right", marginTop: "20px" }}>
+            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+              Cost: ₹{duration * 25}
+            </Typography>
+          </Grid>
+        </Grid>
+      </CardContent>
       <CardActions></CardActions>
     </div>
   );
