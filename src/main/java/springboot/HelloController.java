@@ -5,10 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.springframework.web.bind.annotation.*;
+import springboot.inputclasses.Users;
+
+import springboot.inputclasses.locations;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -18,41 +23,45 @@ public class HelloController {
 
     public HelloController() throws firebase4j.error.FirebaseException {
     }
-
-    //creating functions for first module i.e. Log in/Sign up
-    @GetMapping("/user")
-    public String index() {
-        User p= new User("1234","37863");
-        String jsonStr="";
-        try {
-            jsonStr = Obj.writeValueAsString(p);
-            System.out.println(jsonStr);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return jsonStr;
-    }
-    @PostMapping("/user/add/{location}")
-    public String addUser(@RequestBody String jsonData, @PathVariable String location) throws firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException, firebase4j.error.JacksonUtilityException {
-        System.out.println(jsonData);
-        User user= new Gson().fromJson(jsonData,User.class);
-        return dao.addUser(user,location,jsonData);
-    }
+//    @PostMapping("/user/add/{location}")
+//    public String addUser(@RequestBody String jsonData, @PathVariable String location) throws firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException, firebase4j.error.JacksonUtilityException {
+//        System.out.println(jsonData);
+//        User user= new Gson().fromJson(jsonData,User.class);
+//        return dao.addUser(user,location,jsonData);
+//    }
     @GetMapping("/login")
     public String login(@RequestBody Map<String,String> data) throws JsonProcessingException {
-        User user=Building.login(data.get("username").,data.get("pwd"));
+        User user=Building.login(data.get("username"),data.get("pwd"));
         if(user== null) {
             return "{"+"\"value\":\"Failed\""+"}";
         }
         else return Obj.writeValueAsString(user);
     }
-    //creating functions for module 2 ie Dashboard
-    @GetMapping("/data/slots")
-    public String slots(@RequestBody Map<String,String> data) throws UnsupportedEncodingException, ParseException {
-        Building building = dao.parking.getBuilding(data.get("location"));
-        return building.getSlots(data.get("checkIn"),data.get("checkOut"));
+    @PostMapping("/otp/{email}")
+    public String otp(@PathVariable String email) throws IOException {
+        Mailer k = new Mailer();
+        k.sendMail(email,"OTP: 3469");
+        return "{"+"\"value\""+"\"Done\""+"}";
     }
-    // creating functions for module 3
-
+    @PostMapping("/update/users")
+    public String datalocations(@RequestBody String data) throws firebase4j.error.JacksonUtilityException, firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException {
+        Users p= new Gson().fromJson(data,Users.class);
+        Building.users=p.users;
+        Application.update();
+        return "Done";
+    }
+    @PostMapping("/update")
+    public String update_users(@RequestBody String data) throws firebase4j.error.JacksonUtilityException, firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException
+    {
+        locations p= new Gson().fromJson(data, locations.class);
+        Application.k.DataLocations=p.data;
+        Application.update();
+        return "Done";
+    }
+    @PostMapping("/confirm")
+    public String confirm(@RequestBody Map<String,String> data) throws IOException {
+        Mailer k = new Mailer();
+        k.confirmMail(data.get("email"),data.get("checkin"),data.get("checkout"));
+        return "Done";
+    }
 }

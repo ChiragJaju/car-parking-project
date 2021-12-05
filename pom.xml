@@ -16,9 +16,13 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
-	</repositories>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>4.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -29,11 +33,6 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sendgrid</groupId>
-			<artifactId>java-http-client</artifactId>
-			<version></version>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -54,10 +53,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-		<dependency>
-    <groupId>com.sendgrid</groupId>
-    <artifactId>sendgrid-java</artifactId>
-</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -85,5 +80,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

@@ -1,7 +1,10 @@
 package springboot;
 
+import java.util.ArrayList;
+
 public class Worker
 {
-    int rating;
     String name;
+    int salary;
+    String dateOfJoin;
 }

@@ -5,19 +5,18 @@ import java.util.Date;
 
 public class ParkingLot
 {
-    boolean occupied = false;
-    String service;
-    ArrayList<Ticket> tickets=new ArrayList<>();
-    Worker Worker = new Worker();
-
-    public boolean isfree(Date checkIn, Date checkOut) {
-        for(Ticket i :tickets)
+    int number;
+    int floor;
+    String carType;
+    double userRating;
+    ArrayList<Ticket> bookings = new ArrayList<>();
+    public boolean isfree(String checkIn, String checkOut) {
+        for(Ticket i :bookings)
         {
-            if((checkIn.after(i.S_time) && checkOut.before(i.E_time)) ||checkIn.before(i.S_time) && checkOut.after(i.E_time))
+            if((checkIn.compareTo(i.checkIn)>0 && checkOut.compareTo(i.checkOut)<0) ||checkIn.compareTo(i.checkIn)>0 && checkOut.compareTo(i.checkIn)<0)
             {
                 return false;
             }
-
         }
         return true;
     }

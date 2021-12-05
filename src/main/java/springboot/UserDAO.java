@@ -22,6 +22,7 @@ public class UserDAO {
     }
     public String addUser(User user,String location,String jsonData) throws FirebaseException, UnsupportedEncodingException, JsonProcessingException, firebase4j.error.JacksonUtilityException {
         String jsonStr="";
+
         com.fasterxml.jackson.databind.ObjectMapper Obj = new ObjectMapper();
         try {
             jsonStr = Obj.writeValueAsString(user);
