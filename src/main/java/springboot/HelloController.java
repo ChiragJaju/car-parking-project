@@ -11,6 +11,7 @@ import java.inputclasses.Users;
 
 import java.inputclasses.locations;
 
+import java.inputclasses.workers;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -55,6 +56,13 @@ public class HelloController {
         locations p= new Gson().fromJson(data, locations.class);
         Application.k.DataLocations=p.data;
         Application.update();
+        return "Done";
+    }
+    @PostMapping("/update/workers")
+    public String update_workers(@RequestBody String data)
+    {
+        workers p = new Gson().fromJson(data,workers.class);
+        Building.workers_global=p.data;
         return "Done";
     }
     @PostMapping("/confirm")

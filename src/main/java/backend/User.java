@@ -1,9 +1,10 @@
 package backend;
 
 import backend.Ticket;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import java.util.ArrayList;
-
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class User {
     public String name, email, username, pwd;
     public double balance;

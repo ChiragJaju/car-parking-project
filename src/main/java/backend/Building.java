@@ -10,6 +10,7 @@ import java.util.ArrayList;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Building {
     public static ArrayList<User> users = new ArrayList<>();
+    public static ArrayList<Worker> workers_global=new ArrayList<>();
     final int charge = 25;
     final int confBook = 100;
     ArrayList<ParkingLot> slots = new ArrayList<>();
