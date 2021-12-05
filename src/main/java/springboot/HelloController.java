@@ -71,4 +71,11 @@ public class HelloController {
         k.confirmMail(data.get("email"),data.get("checkin"),data.get("checkout"));
         return "Done";
     }
+    @GetMapping("/update/users")
+    public String sendUsers()
+    {
+        workers p=new workers();
+        p.data= Building.workers_global;
+
+    }
 }
