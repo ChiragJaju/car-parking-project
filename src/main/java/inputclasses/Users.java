@@ -1,10 +1,10 @@
-package java.inputclasses;
+package inputclasses;
 
-import backend.Building;
+import backend.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 import java.util.ArrayList;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class locations {
-    public ArrayList<Building> data = new ArrayList<>();
+public class Users {
+    public ArrayList<User> data= new ArrayList<>();
 }

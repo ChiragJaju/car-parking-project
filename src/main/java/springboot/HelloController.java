@@ -7,11 +7,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.*;
-import java.inputclasses.Users;
+import inputclasses.Users;
 
-import java.inputclasses.locations;
+import inputclasses.locations;
 
-import java.inputclasses.workers;
+import inputclasses.workers;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class HelloController {
     @PostMapping("/update/users")
     public String datalocations(@RequestBody String data) throws firebase4j.error.JacksonUtilityException, firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException {
         Users p= new Gson().fromJson(data,Users.class);
-        Building.users=p.users;
+        Building.users=p.data;
         Application.update();
         return "Done";
     }
@@ -71,11 +71,11 @@ public class HelloController {
         k.confirmMail(data.get("email"),data.get("checkin"),data.get("checkout"));
         return "Done";
     }
-    @GetMapping("/update/users")
-    public String sendUsers()
-    {
-        workers p=new workers();
-        p.data= Building.workers_global;
-
-    }
+//    @GetMapping("/update/users")
+//    public String sendUsers()
+//    {
+//        workers p=new workers();
+//        p.data= Building.workers_global;
+//
+//    }
 }
