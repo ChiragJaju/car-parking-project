@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./login.css";
 import {
   Avatar,
   Button,
@@ -14,7 +15,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { makeStyles } from "@material-ui/core/styles";
-
+import styled from "styled-components";
 const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
       "-webkit-appearance": "none",
       margin: 0,
     },
+  },
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "yellow !important",
   },
 }));
 
@@ -76,6 +81,20 @@ export default function SignUp(props) {
   const handleCarNumber = (event) => {
     setCarNumber(event.target.value);
   };
+
+  const WhiteBorderTextField = styled(TextField)`
+    & label.Mui-focused {
+      color: white;
+    }
+    & .MuiOutlinedInput-root {
+      &.Mui-focused fieldset {
+        border-color: #229ef3;
+      }
+      &:hover fieldset {
+        border-color: #2d2f3b;
+      }
+    }
+  `;
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -131,12 +150,13 @@ export default function SignUp(props) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            backgroundColor: "#131419",
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <LockOutlinedIcon sx={{ color: "#ffffff" }} />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ color: "#ffffff" }}>
             Sign up
           </Typography>
           <Box
@@ -147,16 +167,22 @@ export default function SignUp(props) {
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
+                <WhiteBorderTextField
                   autoComplete="off"
                   name="firstName"
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  autoFocus
                   value={firstName}
                   onChange={handleFirstName}
+                  InputLabelProps={{
+                    style: { color: "#ffffff" },
+                    classes: {
+                      notchedOutline: classes.notchedOutline,
+                    },
+                  }}
+                  sx={{ input: { color: "#ffffff" } }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -169,6 +195,8 @@ export default function SignUp(props) {
                   autoComplete="off"
                   value={lastName}
                   onChange={handleLastName}
+                  InputLabelProps={{ style: { color: "#ffffff" } }}
+                  sx={{ input: { color: "#ffffff" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -181,6 +209,8 @@ export default function SignUp(props) {
                   autoComplete="off"
                   value={username}
                   onChange={handleUsername}
+                  InputLabelProps={{ style: { color: "#ffffff" } }}
+                  sx={{ input: { color: "#ffffff" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -193,6 +223,8 @@ export default function SignUp(props) {
                   autoComplete="off"
                   value={email}
                   onChange={handleEmail}
+                  InputLabelProps={{ style: { color: "#ffffff" } }}
+                  sx={{ input: { color: "#ffffff" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -206,6 +238,8 @@ export default function SignUp(props) {
                   autoComplete="off"
                   value={password}
                   onChange={handlePassword}
+                  InputLabelProps={{ style: { color: "#ffffff" } }}
+                  sx={{ input: { color: "#ffffff" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -219,6 +253,8 @@ export default function SignUp(props) {
                   autoComplete="off"
                   value={rePassword}
                   onChange={handleRePassword}
+                  InputLabelProps={{ style: { color: "#ffffff" } }}
+                  sx={{ input: { color: "#ffffff" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -229,10 +265,10 @@ export default function SignUp(props) {
                   label="Address"
                   name="address"
                   autoComplete="off"
-                  multiline
-                  minRows={3}
                   value={address}
                   onChange={handleAddress}
+                  InputLabelProps={{ style: { color: "#ffffff" } }}
+                  sx={{ input: { color: "#ffffff" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -247,6 +283,8 @@ export default function SignUp(props) {
                   className={classes.input}
                   value={mobileNumber}
                   onChange={handleMobileNumber}
+                  InputLabelProps={{ style: { color: "#ffffff" } }}
+                  sx={{ input: { color: "#ffffff" } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -259,6 +297,8 @@ export default function SignUp(props) {
                   autoComplete="off"
                   value={carNumber}
                   onChange={handleCarNumber}
+                  InputLabelProps={{ style: { color: "#ffffff" } }}
+                  sx={{ input: { color: "#ffffff" } }}
                 />
               </Grid>
             </Grid>
@@ -282,10 +322,14 @@ export default function SignUp(props) {
             )}
           </Box>
 
-          <Typography component="h1" variant="h5">
+          <Typography
+            component="h1"
+            variant="h5"
+            sx={{ color: "#ffffff", marginBottom: "10px" }}
+          >
             Or
           </Typography>
-          <a href="https://localhost:3000/auth/google">
+          <a href="https://localhost:3000/auth/google" id="link">
             {"Login with "} &nbsp;<i with i class="fab fa-google"></i>
           </a>
         </Box>

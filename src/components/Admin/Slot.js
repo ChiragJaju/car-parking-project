@@ -3,21 +3,23 @@ import { useState, useEffect } from "react";
 import SlotCard from "./Cards/SlotCard";
 import { Grid } from "@material-ui/core";
 import EditSlot from "./Cards/EditSlot";
-
+import AddSlot from "./Cards/AddSlot";
+import AddSlotForm from "./Cards/AddSlotForm";
 const Slot = (props) => {
-  const [editSlot, setEditSlot] = useState(false);
-  const [Locations, setLocations] = useState(DataLocations);
-
-  Locations.forEach((location) => {
+  const [whatSlot, setWhatSlot] = useState("show");
+  const [locations, setLocations] = useState(DataLocations);
+  var slotsToShow = [];
+  locations.forEach((location) => {
     location.slots.forEach((slot) => {
-      props.slotsToShow.push({
+      slotsToShow.push({
         location,
         slot,
       });
+      // props.setSlotsToShow([...props.slotsToShow, { location, slot }]);
     });
   });
 
-  if (editSlot === false) {
+  if (whatSlot === "show") {
     return (
       <Grid
         container
@@ -25,26 +27,39 @@ const Slot = (props) => {
         justifyContent="flex-start"
         alignItems="flex-start"
       >
-        {props.slotsToShow.map((slot) => {
+        {slotsToShow.map((slot) => {
           return (
             <Grid item xs={6}>
               <SlotCard
                 slot={slot}
-                setEditSlot={setEditSlot}
-                locations={Locations}
+                setWhatSlot={setWhatSlot}
+                locations={locations}
                 setLocations={setLocations}
               />
             </Grid>
           );
         })}
+        <Grid item xs={6}>
+          <AddSlot setWhatSlot={setWhatSlot} />
+        </Grid>
       </Grid>
+    );
+  } else if (whatSlot === "add") {
+    return (
+      <AddSlotForm
+        locations={locations}
+        setLocations={setLocations}
+        setWhatSlot={setWhatSlot}
+      />
     );
   } else {
     return (
       <EditSlot
-        locations={Locations}
+        locations={locations}
         setLocations={setLocations}
-        setEditSlot={setEditSlot}
+        setWhatSlot={setWhatSlot}
+        // slotsToShow={props.slotsToShow}
+        // setSlotsToShow={props.setSlotsToShow}
       />
     );
   }

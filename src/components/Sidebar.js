@@ -50,7 +50,7 @@ export default function PermanentDrawerLeft(props) {
         sx={{
           width: `calc(100% - ${drawerWidth}px)`,
           ml: `${drawerWidth}px`,
-          background: "#242121",
+          background: "#131419",
         }}
       >
         <Toolbar>
@@ -67,6 +67,7 @@ export default function PermanentDrawerLeft(props) {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            backgroundColor: "#131419",
           },
         }}
         variant="permanent"
@@ -77,49 +78,48 @@ export default function PermanentDrawerLeft(props) {
         <List>
           <ListItem button onClick={locationClick}>
             <ListItemIcon>
-              <BreakfastDiningIcon></BreakfastDiningIcon>
+              <BreakfastDiningIcon
+                sx={{ color: "#229EF3" }}
+              ></BreakfastDiningIcon>
             </ListItemIcon>
-            <ListItemText sx={{ color: "#242121" }}>
+            <ListItemText sx={{ color: "#FFFFFF" }}>
               Manage Locations
             </ListItemText>
           </ListItem>
           <ListItem button onClick={slotClick}>
             <ListItemIcon>
-              <ViewModuleSharpIcon></ViewModuleSharpIcon>
+              <ViewModuleSharpIcon
+                sx={{ color: "#229EF3" }}
+              ></ViewModuleSharpIcon>
             </ListItemIcon>
-            <ListItemText sx={{ color: "#242121" }}>Manage Slots</ListItemText>
+            <ListItemText sx={{ color: "#FFFFFF" }}>Manage Slots</ListItemText>
           </ListItem>
           {/* </List>
         <Divider />
         <List> */}
           <ListItem button onClick={workerClick}>
             <ListItemIcon>
-              <GroupSharpIcon></GroupSharpIcon>
+              <GroupSharpIcon sx={{ color: "#229EF3" }}></GroupSharpIcon>
             </ListItemIcon>
-            <ListItemText sx={{ color: "#242121" }}>
+            <ListItemText sx={{ color: "#FFFFFF" }}>
               Manage Workers
             </ListItemText>
           </ListItem>
-          <ListItem button onClick={requestClick}>
-            <ListItemIcon>
-              <MailIcon></MailIcon>
-            </ListItemIcon>
-            <ListItemText sx={{ color: "#242121" }}>
-              Pending Requests
-            </ListItemText>
-          </ListItem>
+
           <ListItem button onClick={carClick}>
             <ListItemIcon>
-              <DirectionsCarIcon></DirectionsCarIcon>
+              <DirectionsCarIcon sx={{ color: "#229EF3" }}></DirectionsCarIcon>
             </ListItemIcon>
-            <ListItemText sx={{ color: "#242121" }}>Manage Cars</ListItemText>
+            <ListItemText sx={{ color: "#FFFFFF" }}>Manage Cars</ListItemText>
           </ListItem>
           <Link to="/logout" style={{ textDecoration: "none" }}>
             <ListItem button>
               <ListItemIcon>
-                <PowerSettingsNewIcon></PowerSettingsNewIcon>
+                <PowerSettingsNewIcon
+                  sx={{ color: "#229EF3" }}
+                ></PowerSettingsNewIcon>
               </ListItemIcon>
-              <ListItemText sx={{ color: "#242121" }}>Sign out</ListItemText>
+              <ListItemText sx={{ color: "#FFFFFF" }}>Sign out</ListItemText>
             </ListItem>
           </Link>
         </List>

@@ -1,6 +1,8 @@
 // useState from React
 import React, { useState, useContext } from "react";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+import "./login.css";
 import {
   Avatar,
   Button,
@@ -14,40 +16,89 @@ import {
 } from "@mui/material";
 import LockOutlined from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { User } from "../components/Data";
+import { DataLocations, User } from "../components/Data";
+import styled from "styled-components";
+import { auth, provider } from "../firebase/firebase";
 import AuthContext from "../context/AuthContext";
+
 const theme = createTheme();
 
+const useStyles = makeStyles((theme) => ({
+  textfield: {
+    border: "1px solid white",
+  },
+}));
 export default function Login(props) {
+  const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passMatch, setPassMatch] = useState();
-  const { setUserData, setWhatToShow } = useContext(AuthContext);
-
+  const { setUserData, setWhatToShow, userData } = useContext(AuthContext);
+  const [userValid, setUserValid] = useState(true);
   const handleUsername = (event) => {
     setUsername(event.target.value);
   };
   const handlePass = (event) => {
     setPassword(event.target.value);
   };
+  const googleSignIn = async () => {
+    const res = await auth.signInWithPopup(provider).catch(alert);
+    props.setLoggedIn("user");
+    setWhatToShow("BookSlot");
+    const data = {
+      username: res.user.displayName,
+      password: "google",
+      name: res.user.displayName,
+      bookings: [],
+      email: res.user.email,
+      numberOfVisits: 0,
+      balance: 100,
+    };
+    setUserData(data);
+    User.push(data);
+    console.log(User);
 
+    // console.log(res.user.displayName);
+  };
+  // const WhiteBorderTextField = styled(TextField)`
+  //   & label.Mui-focused {
+  //     color: white;
+  //   }
+  //   & .MuiOutlinedInput-root {
+  //     &.Mui-focused fieldset {
+  //       border-color: #229ef3;
+  //     }
+  //     &:hover fieldset {
+  //       border-color: #2d2f3b;
+  //     }
+  //   }
+  // `;
   // check if pass matches with corresponding email
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (username === "admin") {
-      props.setLoggedIn("admin");
-      setWhatToShow("location");
+
+    var counter = 0;
+    User.map((x) => {
+      if (x.username === username && x.password === password) {
+        setUserData(x);
+        counter = 1;
+      }
+    });
+    if (username === "admin" && password === "admin") counter = 1;
+    if (counter === 1) {
+      setUserValid(true);
+      if (username === "admin") {
+        props.setLoggedIn("admin");
+        setWhatToShow("location");
+      } else {
+        props.setLoggedIn("user");
+        setWhatToShow("BookSlot");
+      }
     } else {
-      props.setLoggedIn("user");
-      setWhatToShow("BookSlot");
+      setUserValid(false);
     }
-    const data = {
-      username,
-      password,
-      name: User[0].name,
-    };
-    setUserData(data);
+    // console.log(userData);
     // const response = await axios.post("localhost:8080/");
     //Axios send data
     //receive response
@@ -70,15 +121,21 @@ export default function Login(props) {
           sx={{
             backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
+            backgroundColor: "#131419",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid
+          sx={{ backgroundColor: "#131419" }}
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+        >
           <Box
             sx={{
               my: 8,
@@ -86,12 +143,13 @@ export default function Login(props) {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              backgroundColor: "#131419",
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlined />
             </Avatar>
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h5" sx={{ color: "#ffffff" }}>
               Sign in
             </Typography>
             <Box
@@ -107,8 +165,11 @@ export default function Login(props) {
                 id="username"
                 label="Username"
                 name="username"
-                autoFocus
+                value={username}
+                autoComplete="off"
                 onChange={handleUsername}
+                InputLabelProps={{ style: { color: "#ffffff" } }}
+                sx={{ input: { color: "#ffffff" } }}
               />
               <TextField
                 margin="normal"
@@ -118,8 +179,10 @@ export default function Login(props) {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
+                InputLabelProps={{ style: { color: "#ffffff" } }}
                 onChange={handlePass}
+                value={password}
+                sx={{ input: { color: "#ffffff" } }}
               />
               <Button
                 type="submit"
@@ -129,15 +192,24 @@ export default function Login(props) {
               >
                 Sign In
               </Button>
+              {!userValid && (
+                <Typography
+                  component="h1"
+                  variant="h6"
+                  sx={{ color: "#ff0000" }}
+                >
+                  Invalid Username/Password
+                </Typography>
+              )}
               <Grid container>
                 <Grid item xs>
                   {/* add redirect link */}
-                  <Link href="#" variant="body2">
+                  <Link href="#" variant="body2" id="link">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
+                  <Link href="/signup" variant="body2" id="link">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -152,9 +224,12 @@ export default function Login(props) {
                   marginTop: "10px",
                 }}
               >
-                <a href="https://localhost:3000/auth/google">
-                  {"Login with "} &nbsp;<i with i class="fab fa-google"></i>
-                </a>
+                <Typography variant="body2" sx={{ color: "#ffff" }}>
+                  {/* <a href="https://localhost:3000/auth/google" id="link">
+                    {"Login with "} &nbsp;<i with i class="fab fa-google"></i>
+                  </a> */}
+                  <Button onClick={googleSignIn}>Login with Google</Button>
+                </Typography>
               </Grid>
               {passMatch === false && (
                 <Typography style={{ color: "#ff0000" }}>

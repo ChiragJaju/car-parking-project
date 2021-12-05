@@ -1,6 +1,8 @@
 import AuthContext from "./context/AuthContext";
 import { useContext, useState } from "react";
 import Login from "./pages/login";
+import "./App.css";
+import DotRing from "./components/DotRing/DotRing";
 import {
   BrowserRouter as Router,
   Route,
@@ -17,6 +19,7 @@ function App() {
 
   return (
     <Router>
+      <DotRing />
       <Switch>
         <Route path="/login">
           {loggedIn === false ? (

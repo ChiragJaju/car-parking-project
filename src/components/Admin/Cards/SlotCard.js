@@ -1,17 +1,21 @@
 import { useContext } from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+} from "@mui/material";
+
 import { makeStyles } from "@material-ui/core/styles";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+
 import AuthContext from "../../../context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: "2.5vw 2.5vw",
-    backgroundColor: "#524c4c",
+    backgroundColor: "#0D0D12",
     // width: "50vw",
     padding: "20px",
     textColor: "#ffffff",
@@ -26,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     "&:hover": {
-      backgroundColor: "#a39f9e",
+      backgroundColor: "#229EF3",
     },
   },
 }));
@@ -35,7 +39,7 @@ export default function OutlinedCard(props) {
   const classes = useStyles();
   const { setSlotToEdit } = useContext(AuthContext);
   const startEdit = () => {
-    props.setEditSlot(true);
+    props.setWhatSlot("edit");
     setSlotToEdit(props.slot);
   };
   const startDelete = () => {

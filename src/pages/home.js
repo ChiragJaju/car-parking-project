@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import Sidebar from "../components/Sidebar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import Admin_Location from "../components/Admin/Location";
 import Admin_Worker from "../components/Admin/Worker";
@@ -10,9 +10,9 @@ import Admin_Car from "../components/Admin/Car";
 import UserSidebar from "../components/UserSidebar";
 import BookSlot from "../components/User/BookSlot";
 import ViewBooking from "../components/User/ViewBooking";
+import Checkout from "../components/User/Checkout";
 const Home = (props) => {
   const { whatToShow } = useContext(AuthContext);
-  var slotsToShow = [];
   // console.log(props.loggedIn);
   return (
     <div>
@@ -29,7 +29,7 @@ const Home = (props) => {
         <Sidebar>
           {whatToShow === "location" && <Admin_Location />}
           {whatToShow === "worker" && <Admin_Worker />}
-          {whatToShow === "slot" && <Admin_Slot slotsToShow={slotsToShow} />}
+          {whatToShow === "slot" && <Admin_Slot />}
           {whatToShow === "request" && <Admin_Request />}
           {whatToShow === "car" && <Admin_Car />}
         </Sidebar>
@@ -37,6 +37,7 @@ const Home = (props) => {
       {props.loggedIn === "user" && (
         <UserSidebar>
           {whatToShow === "BookSlot" && <BookSlot />}
+          {whatToShow === "Checkout" && <Checkout />}
           {whatToShow === "View Booking" && <ViewBooking />}
         </UserSidebar>
       )}

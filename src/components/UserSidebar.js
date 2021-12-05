@@ -3,7 +3,7 @@ import { useContext } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-
+import { Grid } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -22,7 +22,8 @@ import AuthContext from "../context/AuthContext";
 const drawerWidth = 240;
 
 export default function PermanentDrawerLeft(props) {
-  const { whatToShow, setWhatToShow } = useContext(AuthContext);
+  const { whatToShow, setWhatToShow, userData } = useContext(AuthContext);
+  console.log(userData);
   const BookClick = () => {
     setWhatToShow("BookSlot");
   };
@@ -39,14 +40,27 @@ export default function PermanentDrawerLeft(props) {
         sx={{
           width: `calc(100% - ${drawerWidth}px)`,
           ml: `${drawerWidth}px`,
-          background: "#242121",
+          background: "#131419",
         }}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Welcome /Name/ -
-            {whatToShow.charAt(0).toUpperCase() + whatToShow.slice(1)}
-          </Typography>
+          <Grid
+            container
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
+            <Grid item xs={6}>
+              <Typography variant="h6" noWrap component="div">
+                {whatToShow.charAt(0).toUpperCase() + whatToShow.slice(1)}
+              </Typography>
+            </Grid>
+            <Grid item xs={6} sx={{ textAlign: "right" }}>
+              <Typography sx={{ fontSize: "1.5rem" }}>
+                Balance: ₹{userData.balance}
+              </Typography>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -56,6 +70,7 @@ export default function PermanentDrawerLeft(props) {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            background: "#131419",
           },
         }}
         variant="permanent"
@@ -65,16 +80,16 @@ export default function PermanentDrawerLeft(props) {
         <Divider />
         <List>
           <ListItem button onClick={BookClick}>
-            <ListItemIcon>
+            <ListItemIcon sx={{ color: "#229EF3" }}>
               <AddBoxIcon></AddBoxIcon>
             </ListItemIcon>
-            <ListItemText sx={{ color: "#242121" }}>Book a slot</ListItemText>
+            <ListItemText sx={{ color: "#ffff" }}>Book a slot</ListItemText>
           </ListItem>
           <ListItem button onClick={ViewClick}>
             <ListItemIcon>
-              <ViewListIcon></ViewListIcon>
+              <ViewListIcon sx={{ color: "#229EF3" }}></ViewListIcon>
             </ListItemIcon>
-            <ListItemText sx={{ color: "#242121" }}>View Bookings</ListItemText>
+            <ListItemText sx={{ color: "#ffff" }}>View Bookings</ListItemText>
           </ListItem>
           {/* </List>
         <Divider />
@@ -82,9 +97,11 @@ export default function PermanentDrawerLeft(props) {
           <Link to="/logout" style={{ textDecoration: "none" }}>
             <ListItem button>
               <ListItemIcon>
-                <PowerSettingsNewIcon></PowerSettingsNewIcon>
+                <PowerSettingsNewIcon
+                  sx={{ color: "#229EF3" }}
+                ></PowerSettingsNewIcon>
               </ListItemIcon>
-              <ListItemText sx={{ color: "#242121" }}>Sign out</ListItemText>
+              <ListItemText sx={{ color: "#ffff" }}>Sign out</ListItemText>
             </ListItem>
           </Link>
         </List>

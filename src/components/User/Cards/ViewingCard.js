@@ -14,7 +14,7 @@ import { User } from "../../Data";
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: ".5vw .5vw ",
-    backgroundColor: "#524c4c",
+    backgroundColor: "#0D0D12",
     width: "41vw",
     padding: "20px",
     textColor: "#ffffff",

@@ -40,6 +40,7 @@ export default function OutlinedCard(props) {
       toShow = x.bookings;
     }
   });
+  console.log(userData);
   return (
     <Grid
       container

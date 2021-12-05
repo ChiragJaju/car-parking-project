@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { makeStyles } from "@material-ui/core/styles";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import "./BookSlot.css";
+
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import {
   FormControl,
@@ -22,7 +24,7 @@ import BookingCard from "./Cards/BookingCard";
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: "1vw 1vw",
-    backgroundColor: "#524c4c",
+    backgroundColor: "#38393d",
     width: "83vw",
     padding: "30px",
     paddingBottom: "70px",
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
   button: {
     "&:hover": {
-      backgroundColor: "#a39f9e",
+      backgroundColor: "#229EF3",
     },
   },
   input: {
@@ -111,8 +113,8 @@ const BookSlot = (props) => {
           var a = inTime.getTime();
           var b = outTime.getTime();
           if (
-            (a - x) * (a - y) < 0 ||
-            (b - x) * (b - y) < 0 ||
+            (a - x) * (a - y) <= 0 ||
+            (b - x) * (b - y) <= 0 ||
             (x > a && y < b)
           ) {
             check = true;
@@ -143,6 +145,7 @@ const BookSlot = (props) => {
       setGoodResults(successfulResults);
       setBadResults(failedResults);
       setIsButtonClicked(true);
+      // console.log(DataLocations);
     }
   };
   //   console.log(slotToEdit);
@@ -157,7 +160,7 @@ const BookSlot = (props) => {
         <Grid item xs={12}>
           <Typography
             variant="h3"
-            sx={{ color: "white", paddingBottom: "30px" }}
+            sx={{ color: "#ffff", paddingBottom: "30px" }}
           >
             Book a Slot -
           </Typography>
@@ -170,7 +173,7 @@ const BookSlot = (props) => {
           sx={{ paddingLeft: "100px" }}
         >
           <DateTimePicker
-            label="Date&Time picker"
+            label="Check-in Time"
             value={inTime}
             onChange={handleInTime}
             renderInput={(params) => <TextField {...params} />}
@@ -183,7 +186,7 @@ const BookSlot = (props) => {
           sx={{ paddingLeft: "100px" }}
         >
           <DateTimePicker
-            label="Date&Time picker"
+            label="Check-out Time"
             value={outTime}
             onChange={handleOutTime}
             renderInput={(params) => <TextField {...params} />}
@@ -257,7 +260,7 @@ const BookSlot = (props) => {
     <Box sx={{ minWidth: 275 }}>
       <Card
         variant="outlined"
-        sx={{ backgroundColor: "#403b3b" }}
+        sx={{ backgroundColor: "#0D0D12" }}
         className={classes.card}
       >
         {card}

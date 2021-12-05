@@ -15,7 +15,7 @@ import { DataLocations, User } from "../../Data";
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: "2vw 1vw",
-    backgroundColor: "#b3abab",
+    backgroundColor: "#0D0D12",
     width: "40.5vw",
     padding: "5px",
     textColor: "#ffffff",
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     "&:hover": {
-      backgroundColor: "#524c4c",
+      backgroundColor: "#229EF3",
     },
   },
   hr: {
@@ -44,7 +44,8 @@ export default function OutlinedCard(props) {
   const classes = useStyles();
   // console.log(props.details.slot.userRating);
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const { setSlotToEdit, userData } = useContext(AuthContext);
+  const [isPromoCode, setIsPromoCode] = useState(false);
+  const { setSlotToEdit, userData, setWhatToShow } = useContext(AuthContext);
   const bookSlot = () => {
     const inputData = {
       name: userData.name,
@@ -68,12 +69,18 @@ export default function OutlinedCard(props) {
     User.map((x) => {
       if (x.username === userData.username) {
         x.bookings.push(userBookingData);
+        x.numberOfVisits += 1;
+        if (x.numberOfVisits === 5) {
+          setIsPromoCode(true);
+          x.numberOfVisits = 5;
+        }
       }
     });
     // console.log(DataLocations);
     // console.log(User);
     // console.log(userBookingData);
     setIsConfirmed(true);
+    setWhatToShow("Checkout");
   };
   // console.log(userData);
   const card = (
@@ -86,40 +93,47 @@ export default function OutlinedCard(props) {
           alignItems="flex-start"
         >
           <Grid item xs={6}>
-            <Typography variant="h4">
+            <Typography variant="h4" sx={{ color: "#ffffff" }}>
               Location: {props.details.location.name}
             </Typography>
           </Grid>
-          <Grid item xs={6} sx={{ textAlign: "right", marginBottom: "15px" }}>
+          <Grid
+            item
+            xs={6}
+            sx={{ textAlign: "right", marginBottom: "15px", color: "#ffffff" }}
+          >
             <Typography variant="h3">{props.details.slot.number}</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">
+            <Typography variant="h5" sx={{ color: "#ffffff" }}>
               Address: {props.details.location.address}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5">
+            <Typography variant="h5" sx={{ color: "#ffffff" }}>
               Owner: {props.details.location.owner}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6">
+            <Typography variant="h6" sx={{ color: "#ffffff" }}>
               Max Time Available: {props.details.location.maxTime} hours
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6">
+            <Typography variant="h6" sx={{ color: "#ffffff" }}>
               Cost: ₹{props.numberHours * 25}{" "}
             </Typography>
           </Grid>
           <hr className={classes.hr} />
-          <Grid item xs={12} sx={{ marginTop: "5px" }}>
+          <Grid item xs={12} sx={{ marginTop: "5px", color: "#ffffff" }}>
             <Typography variant="h4">
               Features:{" "}
               {props.details.location.servicesProvided.map((x) => {
                 return (
-                  <Typography variant="h6" sx={{ marginLeft: "150px" }}>
+                  <Typography
+                    variant="h6"
+                    sx={{ marginLeft: "150px", color: "#ffffff" }}
+                  >
                     {x}
                   </Typography>
                 );
@@ -127,7 +141,7 @@ export default function OutlinedCard(props) {
             </Typography>
           </Grid>
           <Grid item xs={12} sx={{ marginTop: "20px" }}>
-            <Typography variant="h6">
+            <Typography variant="h6" sx={{ color: "#ffffff" }}>
               User Rating : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Rating
                 name="half-rating-read"
@@ -170,7 +184,7 @@ export default function OutlinedCard(props) {
         {isConfirmed && (
           <Typography
             variant="h6"
-            sx={{ marginLeft: "10px", color: "#088708" }}
+            sx={{ marginLeft: "10px", color: "#229EF3" }}
           >
             Booking Confirmed.
           </Typography>

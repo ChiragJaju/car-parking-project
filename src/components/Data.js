@@ -1,4 +1,4 @@
-export const DataLocations = [
+export var DataLocations = [
   {
     name: "Home",
     address: "abccc",
@@ -50,7 +50,7 @@ export const DataLocations = [
     workers: [
       {
         name: "Aj",
-        dateOfJoin: "---",
+        dateOfJoin: "2/10/19",
         salary: 2000,
       },
     ],
@@ -70,8 +70,9 @@ export const DataLocations = [
 export const User = [
   {
     name: "Ajay",
-    username: "test@1.com",
+    username: "abc",
     email: "-",
+    password: "abc",
     bookings: [
       // {
       //   slotNumber: 1,
@@ -81,5 +82,14 @@ export const User = [
       //   regNumber: "-",
       // },
     ],
+    numberOfVisits: 0,
+    balance: 100,
   },
 ];
+
+export const Workers = [];
+DataLocations.map((x) => {
+  x.workers.map((y) => {
+    Workers.push(y);
+  });
+});

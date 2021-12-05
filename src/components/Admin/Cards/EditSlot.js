@@ -12,7 +12,7 @@ import { TextField } from "@mui/material";
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: "2.5vw 2.5vw",
-    backgroundColor: "#524c4c",
+    backgroundColor: "#0D0D12",
     width: "40vw",
     padding: "20px",
     textColor: "#ffffff",
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     "&:hover": {
-      backgroundColor: "#a39f9e",
+      backgroundColor: "#229EF3",
     },
   },
   input: {
@@ -65,9 +65,9 @@ const EditSlot = (props) => {
         x.slots = xx;
       } else return false;
     });
-    // console.log(props.locations);
+
     props.setLocations(props.locations);
-    props.setEditSlot(false);
+    props.setWhatSlot("show");
   };
   //   console.log(slotToEdit);
   const card = (
