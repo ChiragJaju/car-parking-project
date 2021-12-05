@@ -11,9 +11,14 @@ import UserSidebar from "../components/UserSidebar";
 import BookSlot from "../components/User/BookSlot";
 import ViewBooking from "../components/User/ViewBooking";
 import Checkout from "../components/User/Checkout";
+import AddBalance from "../components/User/AddBalance";
+
+import Worker from "../components/Worker/Worker";
 const Home = (props) => {
   const { whatToShow } = useContext(AuthContext);
   // console.log(props.loggedIn);
+  console.log(whatToShow);
+  console.log(props.loggedIn);
   return (
     <div>
       {/* props.loggedIn === "admin" && ( 
@@ -39,6 +44,19 @@ const Home = (props) => {
           {whatToShow === "BookSlot" && <BookSlot />}
           {whatToShow === "Checkout" && <Checkout />}
           {whatToShow === "View Booking" && <ViewBooking />}
+          {whatToShow === "Add Balance" && <AddBalance />}
+          {whatToShow === "worker" && <Worker />}
+        </UserSidebar>
+      )}
+      {/* {props.loggedIn === "worker" && (
+        <Sidebar>{whatToShow === "worker" && <Worker />}</Sidebar>
+      )} */}
+      {props.loggedIn === "worker" && (
+        <UserSidebar>
+          {whatToShow === "BookSlot" && <BookSlot />}
+          {whatToShow === "Checkout" && <Checkout />}
+          {whatToShow === "View Booking" && <ViewBooking />}
+          {whatToShow === "Add Balance" && <AddBalance />}
         </UserSidebar>
       )}
     </div>

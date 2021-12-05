@@ -45,7 +45,8 @@ export default function OutlinedCard(props) {
   // console.log(props.details.slot.userRating);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isPromoCode, setIsPromoCode] = useState(false);
-  const { setSlotToEdit, userData, setWhatToShow } = useContext(AuthContext);
+  const { setSlotToEdit, userData, setWhatToShow, setBookingDetails } =
+    useContext(AuthContext);
   const bookSlot = () => {
     const inputData = {
       name: userData.name,
@@ -68,11 +69,11 @@ export default function OutlinedCard(props) {
     };
     User.map((x) => {
       if (x.username === userData.username) {
-        x.bookings.push(userBookingData);
+        // x.bookings.push(userBookingData);
         x.numberOfVisits += 1;
         if (x.numberOfVisits === 5) {
           setIsPromoCode(true);
-          x.numberOfVisits = 5;
+          x.numberOfVisits = 0;
         }
       }
     });
@@ -80,6 +81,8 @@ export default function OutlinedCard(props) {
     // console.log(User);
     // console.log(userBookingData);
     setIsConfirmed(true);
+    setBookingDetails(userBookingData);
+
     setWhatToShow("Checkout");
   };
   // console.log(userData);

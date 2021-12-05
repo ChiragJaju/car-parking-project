@@ -140,6 +140,7 @@ const BookSlot = (props) => {
             slot: slot,
             location: locationToCheck[0],
             inputTime,
+            cost: 0,
           });
       });
       setGoodResults(successfulResults);

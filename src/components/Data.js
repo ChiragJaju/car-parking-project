@@ -52,6 +52,8 @@ export var DataLocations = [
         name: "Aj",
         dateOfJoin: "2/10/19",
         salary: 2000,
+        username: "w_ajay",
+        password: "ajay",
       },
     ],
     waitingList: [
@@ -62,7 +64,7 @@ export var DataLocations = [
       //   car: "--",
       // },
     ],
-    servicesProvided: ["Car Wash", "Tyre Changing", "Wheel Alignment"],
+    servicesProvided: ["Car Wash", "Tyre Change", "Wheel Alignment"],
     maxTime: 5,
   },
 ];
@@ -83,13 +85,16 @@ export const User = [
       // },
     ],
     numberOfVisits: 0,
-    balance: 100,
+    balance: 1000,
   },
 ];
 
-export const Workers = [];
-DataLocations.map((x) => {
-  x.workers.map((y) => {
-    Workers.push(y);
-  });
-});
+export const Workers = [
+  {
+    name: "Aj",
+    dateOfJoin: "2/10/19",
+    salary: 2000,
+    username: "w_ajay",
+    password: "ajay",
+  },
+];

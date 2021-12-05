@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import LockOutlined from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { DataLocations, User } from "../components/Data";
+import { DataLocations, User, Workers } from "../components/Data";
 import styled from "styled-components";
 import { auth, provider } from "../firebase/firebase";
 import AuthContext from "../context/AuthContext";
@@ -78,26 +78,43 @@ export default function Login(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    var counter = 0;
-    User.map((x) => {
-      if (x.username === username && x.password === password) {
-        setUserData(x);
-        counter = 1;
-      }
-    });
-    if (username === "admin" && password === "admin") counter = 1;
-    if (counter === 1) {
-      setUserValid(true);
-      if (username === "admin") {
-        props.setLoggedIn("admin");
-        setWhatToShow("location");
-      } else {
+    if (username[0] === "w") {
+      var countera = 0;
+      Workers.map((x) => {
+        if (x.username === username && x.password === password) {
+          setUserData(x);
+          countera = 1;
+        }
+      });
+      if (countera === 1) {
         props.setLoggedIn("user");
-        setWhatToShow("BookSlot");
+        setWhatToShow("worker");
+      } else {
+        setUserValid(false);
       }
     } else {
-      setUserValid(false);
+      var counter = 0;
+      User.map((x) => {
+        if (x.username === username && x.password === password) {
+          setUserData(x);
+          counter = 1;
+        }
+      });
+      if (username === "admin" && password === "admin") counter = 1;
+      if (counter === 1) {
+        setUserValid(true);
+        if (username === "admin") {
+          props.setLoggedIn("admin");
+          setWhatToShow("location");
+        } else {
+          props.setLoggedIn("user");
+          setWhatToShow("BookSlot");
+        }
+      } else {
+        setUserValid(false);
+      }
     }
+
     // console.log(userData);
     // const response = await axios.post("localhost:8080/");
     //Axios send data
@@ -192,6 +209,7 @@ export default function Login(props) {
               >
                 Sign In
               </Button>
+
               {!userValid && (
                 <Typography
                   component="h1"

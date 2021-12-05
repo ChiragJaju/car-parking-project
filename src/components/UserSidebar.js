@@ -12,7 +12,7 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import AppBar from "@mui/material/AppBar";
 import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
@@ -23,7 +23,7 @@ const drawerWidth = 240;
 
 export default function PermanentDrawerLeft(props) {
   const { whatToShow, setWhatToShow, userData } = useContext(AuthContext);
-  console.log(userData);
+  // console.log(userData);
   const BookClick = () => {
     setWhatToShow("BookSlot");
   };
@@ -31,7 +31,9 @@ export default function PermanentDrawerLeft(props) {
   const ViewClick = () => {
     setWhatToShow("View Booking");
   };
-
+  const BalanceClick = () => {
+    setWhatToShow("Add Balance");
+  };
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -56,9 +58,11 @@ export default function PermanentDrawerLeft(props) {
               </Typography>
             </Grid>
             <Grid item xs={6} sx={{ textAlign: "right" }}>
-              <Typography sx={{ fontSize: "1.5rem" }}>
-                Balance: ₹{userData.balance}
-              </Typography>
+              {whatToShow !== "worker" && (
+                <Typography sx={{ fontSize: "1.5rem" }}>
+                  Balance: ₹{userData.balance}
+                </Typography>
+              )}
             </Grid>
           </Grid>
         </Toolbar>
@@ -79,18 +83,34 @@ export default function PermanentDrawerLeft(props) {
         <Toolbar />
         <Divider />
         <List>
-          <ListItem button onClick={BookClick}>
-            <ListItemIcon sx={{ color: "#229EF3" }}>
-              <AddBoxIcon></AddBoxIcon>
-            </ListItemIcon>
-            <ListItemText sx={{ color: "#ffff" }}>Book a slot</ListItemText>
-          </ListItem>
-          <ListItem button onClick={ViewClick}>
-            <ListItemIcon>
-              <ViewListIcon sx={{ color: "#229EF3" }}></ViewListIcon>
-            </ListItemIcon>
-            <ListItemText sx={{ color: "#ffff" }}>View Bookings</ListItemText>
-          </ListItem>
+          {whatToShow !== "worker" && (
+            <ListItem button onClick={BookClick}>
+              <ListItemIcon sx={{ color: "#229EF3" }}>
+                <AddBoxIcon></AddBoxIcon>
+              </ListItemIcon>
+              <ListItemText sx={{ color: "#ffff" }}>Book a slot</ListItemText>
+            </ListItem>
+          )}
+
+          {whatToShow !== "worker" && (
+            <ListItem button onClick={ViewClick}>
+              <ListItemIcon>
+                <ViewListIcon sx={{ color: "#229EF3" }}></ViewListIcon>
+              </ListItemIcon>
+              <ListItemText sx={{ color: "#ffff" }}>View Bookings</ListItemText>
+            </ListItem>
+          )}
+          {whatToShow !== "worker" && (
+            <ListItem button onClick={BalanceClick}>
+              <ListItemIcon>
+                <MonetizationOnIcon
+                  sx={{ color: "#229EF3" }}
+                ></MonetizationOnIcon>
+              </ListItemIcon>
+              <ListItemText sx={{ color: "#ffff" }}>Add Balance</ListItemText>
+            </ListItem>
+          )}
+
           {/* </List>
         <Divider />
         <List> */}

@@ -9,6 +9,7 @@ function AuthContextProvider(props) {
   const [slotToDelete, setSlotToDelete] = useState();
   const [locationToEdit, setLocationToEdit] = useState();
   const [locationToDelete, setLocationToDelete] = useState();
+  const [bookingDetails, setBookingDetails] = useState();
 
   return (
     <AuthContext.Provider
@@ -25,6 +26,8 @@ function AuthContextProvider(props) {
         setLocationToEdit,
         locationToDelete,
         setLocationToDelete,
+        bookingDetails,
+        setBookingDetails,
       }}
     >
       {props.children}

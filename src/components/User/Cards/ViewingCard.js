@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function OutlinedCard(props) {
   const classes = useStyles();
-  console.log(props.details.details);
+  // console.log(props.details.details);
   const x = props.details.details;
   const duration = Math.ceil(
     (x.inputTime.checkOut.getTime() - x.inputTime.checkIn.getTime()) / 3600000
@@ -97,7 +97,7 @@ export default function OutlinedCard(props) {
           </Grid>
           <Grid item xs={6} sx={{ textAlign: "right", marginTop: "20px" }}>
             <Typography variant="h5" sx={{ color: "#ffffff" }}>
-              Cost: ₹{duration * 25}
+              Cost: ₹{x.cost}
             </Typography>
           </Grid>
         </Grid>
