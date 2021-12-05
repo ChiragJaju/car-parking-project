@@ -1,11 +1,11 @@
-package springboot;
+package backend;
+
+import backend.Ticket;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class User
-{
-    public String name,email,username,pwd;
+public class User {
+    public String name, email, username, pwd;
     public double balance;
     ArrayList<Ticket> bookings = new ArrayList<>();
     // User(String k,String m)

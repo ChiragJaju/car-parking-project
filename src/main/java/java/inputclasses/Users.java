@@ -1,6 +1,6 @@
-package springboot.inputclasses;
+package java.inputclasses;
 
-import springboot.User;
+import backend.User;
 
 import java.util.ArrayList;
 

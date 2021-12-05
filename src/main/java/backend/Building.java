@@ -1,31 +1,43 @@
-package springboot;
-
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+package backend;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import springboot.Application;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class Building
-{
-    static ArrayList<User> users = new ArrayList<>();
+public class Building {
+    public static ArrayList<User> users = new ArrayList<>();
     final int charge = 25;
-    final int confBook=100;
+    final int confBook = 100;
     ArrayList<ParkingLot> slots = new ArrayList<>();
     String name;
     String address;
     String owner;
     double userRating;
-    ArrayList<Worker> workers= new ArrayList<>();
+    ArrayList<Worker> workers = new ArrayList<>();
     ArrayList<String> servicesProvided = new ArrayList<>();
     int maxTime;
-    public boolean already_exists(User x)
-    {
+
+    public static void add_user(User x) {
+        users.add(x);
+    }
+
+    public static User login(String u, String p) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).username == u) {
+                if (users.get(i).pwd == p) {
+                    return users.get(i);
+                }
+            }
+        }
+        return null;
+
+    }
+
+    public boolean already_exists(User x) {
         for (User user : users) {
             if (user.username.equals(x.username)) {
                 return false;
@@ -37,32 +49,13 @@ public class Building
         }
         return true;
     }
-    public static void add_user(User x)
-    {
-        users.add(x);
-    }
-    public static User login(String u,String p)
-    {
-        for(int i = 0;i<users.size();i++)
-        {
-            if(users.get(i).username == u)
-            {
-                if(users.get(i).pwd == p)
-                {
-                    return users.get(i);
-                }
-            }
-        }
-        return null;
 
-    }
-    public Double Total_cost(String x, String y)
-    {
-        String begin = x.substring(0,2);
-        String end = y.substring(0,2);
+    public Double Total_cost(String x, String y) {
+        String begin = x.substring(0, 2);
+        String end = y.substring(0, 2);
 
         Double z;
-        z = ((Double.parseDouble(x)- Double.parseDouble(y))*charge)+100;
+        z = ((Double.parseDouble(x) - Double.parseDouble(y)) * charge) + 100;
 
         return z;
     }

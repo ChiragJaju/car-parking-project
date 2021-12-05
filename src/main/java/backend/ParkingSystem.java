@@ -1,19 +1,16 @@
-package springboot;
+package backend;
 
+import backend.Building;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.autoconfigure.info.ProjectInfoProperties;
-
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ParkingSystem {
-    ArrayList<Building> DataLocations = new ArrayList<>();
+    public ArrayList<Building> DataLocations = new ArrayList<>();
 
     //    public ParkingSystem() {
 //        Building b1 = new Building("A", 0, 0);

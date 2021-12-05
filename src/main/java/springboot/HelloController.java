@@ -1,19 +1,18 @@
 package springboot;
 
+import backend.Building;
+import backend.Mailer;
+import backend.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import org.codehaus.jackson.map.JsonSerializer;
 import org.springframework.web.bind.annotation.*;
-import springboot.inputclasses.Users;
+import java.inputclasses.Users;
 
-import springboot.inputclasses.locations;
+import java.inputclasses.locations;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -31,7 +30,7 @@ public class HelloController {
 //    }
     @GetMapping("/login")
     public String login(@RequestBody Map<String,String> data) throws JsonProcessingException {
-        User user=Building.login(data.get("username"),data.get("pwd"));
+        User user= Building.login(data.get("username"),data.get("pwd"));
         if(user== null) {
             return "{"+"\"value\":\"Failed\""+"}";
         }

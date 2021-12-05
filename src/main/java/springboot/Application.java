@@ -3,6 +3,7 @@ package springboot;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
+import backend.ParkingSystem;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
