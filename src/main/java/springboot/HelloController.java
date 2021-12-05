@@ -47,6 +47,7 @@ public class HelloController {
     public String datalocations(@RequestBody String data) throws firebase4j.error.JacksonUtilityException, firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException {
         Users p= new Gson().fromJson(data,Users.class);
         Building.users=p.data;
+        System.out.println(p.data.get(0).bookings.get(0).details.slot.number);
         Application.update();
         return "Done";
     }

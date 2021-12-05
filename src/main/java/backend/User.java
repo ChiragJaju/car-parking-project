@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class User {
     public String name, email, username, pwd;
     public double balance;
-    ArrayList<Ticket> bookings = new ArrayList<>();
+    public int numberOfVisits;
+    public ArrayList<Booking> bookings = new ArrayList<>();
     // User(String k,String m)
     // {
     //     this.l_name=k;
