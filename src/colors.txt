@@ -9,3 +9,5 @@ font-light: rgb(197, 197, 197);
 font-dark: #454545;
 
 backup #38393d
+
+₹

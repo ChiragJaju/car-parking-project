@@ -17,14 +17,16 @@ import {
   Typography,
   TextField,
   Grid,
+  OutlinedInput as MuiOutlinedInput,
 } from "@mui/material";
 import { DataLocations } from "../Data";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import BookingCard from "./Cards/BookingCard";
+
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: "1vw 1vw",
-    backgroundColor: "#38393d",
+    backgroundColor: "#0D0D12",
     width: "83vw",
     padding: "30px",
     paddingBottom: "70px",
@@ -59,13 +61,32 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     width: "200px",
   },
+  select: {
+    "&:before": {
+      textColor: "#ffffff",
+    },
+    "&:after": {
+      borderColor: "#ffffff",
+    },
+    "&:not(.Mui-disabled):hover::before": {
+      borderColor: "#ffffff",
+    },
+    color: "#ffffff",
+  },
+  icon: {
+    fill: "#ffffff",
+  },
+  root: {
+    color: "#ffffff",
+  },
+  label: { color: "white" },
 }));
 const BookSlot = (props) => {
   const { slotToEdit } = useContext(AuthContext);
   const classes = useStyles();
   const [inTime, setInTime] = useState(new Date("2020-12-18T21:11:54"));
   const [outTime, setOutTime] = useState(new Date("2020-12-18T21:11:54"));
-  const [inputLocation, setInputLocation] = useState("Home");
+  const [inputLocation, setInputLocation] = useState("Ashoka Hotels");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [invalidTime, setInvalidTime] = useState(false);
   const [goodResults, setGoodResults] = useState();
@@ -143,6 +164,7 @@ const BookSlot = (props) => {
             cost: 0,
           });
       });
+      console.log(failedResults);
       setGoodResults(successfulResults);
       setBadResults(failedResults);
       setIsButtonClicked(true);
@@ -177,7 +199,13 @@ const BookSlot = (props) => {
             label="Check-in Time"
             value={inTime}
             onChange={handleInTime}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => (
+              <TextField
+                InputLabelProps={{ style: { color: "#ffffff" } }}
+                sx={{ input: { color: "#ffffff" } }}
+                {...params}
+              />
+            )}
           />
         </Grid>
         <Grid
@@ -190,7 +218,13 @@ const BookSlot = (props) => {
             label="Check-out Time"
             value={outTime}
             onChange={handleOutTime}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => (
+              <TextField
+                InputLabelProps={{ style: { color: "#ffffff" } }}
+                sx={{ input: { color: "#ffffff" } }}
+                {...params}
+              />
+            )}
           />
         </Grid>
         <Grid
@@ -206,7 +240,14 @@ const BookSlot = (props) => {
               id="demo-simple-select-helper"
               value={inputLocation}
               onChange={handleLocationChange}
-              className={classes.selectEmpty}
+              className={classes.select}
+              inputProps={{
+                classes: {
+                  icon: classes.icon,
+                  root: classes.root,
+                  label: classes.label,
+                },
+              }}
             >
               {/* <MenuItem value={"Campus"}>Campus</MenuItem>
               <MenuItem value={"Airport"}>Airport</MenuItem>

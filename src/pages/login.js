@@ -52,11 +52,11 @@ export default function Login(props) {
       bookings: [],
       email: res.user.email,
       numberOfVisits: 0,
-      balance: 100,
+      balance: 1000,
     };
     setUserData(data);
     User.push(data);
-    console.log(User);
+    // console.log(User);
 
     // console.log(res.user.displayName);
   };
@@ -129,8 +129,8 @@ export default function Login(props) {
     }
 
     // console.log(userData);
-    const response = await axios.post("localhost:8080/");
-    console.log(response);
+    // const response = await axios.post("localhost:8080/");
+    // console.log(response);
     //Axios send data
     //receive response
     //according to that set PassMatch

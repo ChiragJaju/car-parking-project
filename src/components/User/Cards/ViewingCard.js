@@ -58,12 +58,15 @@ export default function OutlinedCard(props) {
             </Typography>
           </Grid>
           <Grid item xs={6} sx={{ textAlign: "right" }}>
-            <Typography variant="h2" sx={{ color: "#ffffff" }}>
+            <Typography variant="h2" sx={{ color: "#229EF3" }}>
               {x.slot.number}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+            <Typography
+              variant="h5"
+              sx={{ color: "#ffffff", marginTop: "20px" }}
+            >
               Date: {x.inputTime.checkIn.getDate()}/
               {x.inputTime.checkIn.getMonth() + 1}/
               {x.inputTime.checkIn.getFullYear()}
@@ -91,8 +94,8 @@ export default function OutlinedCard(props) {
           </Grid>
           <Grid item xs={6} sx={{ marginTop: "20px" }}>
             <Typography variant="h5" sx={{ color: "#ffffff" }}>
-              Duration of parking:
-              {duration}
+              Duration of parking: &nbsp;
+              {duration} Hours
             </Typography>
           </Grid>
           <Grid item xs={6} sx={{ textAlign: "right", marginTop: "20px" }}>

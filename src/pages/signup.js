@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import "./login.css";
+import { useHistory } from "react-router-dom";
 import { auth, provider } from "../firebase/firebase";
 import {
   Avatar,
@@ -13,12 +14,13 @@ import {
   Container,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { User } from "../components/Data";
+import { User, Otp } from "../components/Data";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import AuthContext from "../context/AuthContext";
 const theme = createTheme();
+
 const useStyles = makeStyles((theme) => ({
   input: {
     "& input[type=number]": {
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp(props) {
+  let history = useHistory();
   const classes = useStyles();
   const { setWhatToShow, setLoggedIn, setUserData } = useContext(AuthContext);
   const [firstName, setFirstName] = useState("");
@@ -87,11 +90,12 @@ export default function SignUp(props) {
   const handleCarNumber = (event) => {
     setCarNumber(event.target.value);
   };
-
-  const checkOtp = (event) => {
+  let res;
+  console.log(Otp.code);
+  const checkOtp = async (event) => {
     event.preventDefault();
-    console.log(otp);
-    if (otp === "462900") {
+
+    if (otp == Otp.code) {
       const sendData = {
         name: firstName + lastName,
         username,
@@ -108,7 +112,11 @@ export default function SignUp(props) {
     } else {
       setWrongOtp(true);
     }
+    await axios.post("http://localhost:8080/update/users", {
+      data: User,
+    });
   };
+
   const googleSignIn = async () => {
     const res = await auth.signInWithPopup(provider).catch(alert);
     props.setLoggedIn("user");
@@ -175,8 +183,10 @@ export default function SignUp(props) {
 
     // User.push(sendData);
     setIsButton(true);
-    const res = await axios.post("http://localhost:8080/otp/cjaju15@gmail.com");
+    res = await axios.post(`http://localhost:8080/otp/${email}`);
+    Otp.code = res.data;
     console.log(res);
+    // code = res.data;
 
     //send all this data
     //get response whether username,email and phonenumber is unique
@@ -215,7 +225,7 @@ export default function SignUp(props) {
           <Box component="form" noValidate onSubmit={checkOtp} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <WhiteBorderTextField
+                <TextField
                   autoComplete="off"
                   name="firstName"
                   required

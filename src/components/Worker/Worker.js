@@ -1,24 +1,28 @@
 import { useContext } from "react";
 import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
   Box,
   Card,
-  CardActions,
-  CardContent,
   Button,
   Typography,
+  TextField,
   Grid,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import AuthContext from "../../context/AuthContext";
 import { User, DataLocations } from "../Data";
 import WorkerCard from "./WorkerCard";
-import BookSlot from "../User/BookSlot";
 const useStyles = makeStyles((theme) => ({
   card: {
-    margin: ".5vw .5vw ",
-    backgroundColor: "#0D0D12",
-    width: "41vw",
-    padding: "20px",
+    margin: "1vw 1vw",
+    backgroundColor: "#38393d",
+    width: "40.5vw",
+    padding: "30px",
+
     textColor: "#ffffff",
   },
   arrow: {
@@ -26,23 +30,45 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.grey[800],
     display: "inline",
   },
-  gridItem: {
-    marginBottom: "25px",
-  },
+
   button: {
     "&:hover": {
-      backgroundColor: "#a39f9e",
+      backgroundColor: "#229EF3",
     },
   },
+  input: {
+    color: "#ffffff",
+    fontSize: "1rem",
+    borderColor: "white",
+  },
+  gridItem: {
+    paddingTop: "20px",
+    "&:hover": {
+      Textcolor: "#ffffff",
+    },
+    color: "#ffffff",
+  },
+  datepicker: {
+    color: "#ffffff",
+  },
+  formControl: {
+    width: "200px",
+  },
 }));
-
 export default function OutlinedCard(props) {
   const classes = useStyles();
   const { setSlotToEdit, userData } = useContext(AuthContext);
+  console.log(userData);
   const card = (
     <div>
-      <Typography variant="h3" sx={{ color: "#ffffff" }}>
-        Hello {userData.name}
+      <Typography variant="h5" sx={{ color: "#ffffff", marginBottom: "20px" }}>
+        Name: {userData.name}
+      </Typography>
+      <Typography variant="h5" sx={{ color: "#ffffff", marginBottom: "20px" }}>
+        Salary: ₹{userData.salary}
+      </Typography>
+      <Typography variant="h5" sx={{ color: "#ffffff", marginBottom: "20px" }}>
+        Date Of Join: {userData.dateOfJoin}
       </Typography>
     </div>
   );
@@ -51,13 +77,20 @@ export default function OutlinedCard(props) {
   User.map((x) => {
     // bookings.push(x.bookings);
     x.bookings.map((y) => {
-      console.log(y);
+      // console.log(y);
       bookings.push(y);
     });
   });
   console.log(User);
   return (
     <Box sx={{ minWidth: 275 }}>
+      <Card
+        variant="outlined"
+        sx={{ backgroundColor: "#0D0D12" }}
+        className={classes.card}
+      >
+        {card}
+      </Card>
       <Grid
         container
         direction="row"

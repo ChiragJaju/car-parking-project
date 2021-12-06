@@ -19,7 +19,7 @@ import {
 import { User } from "../Data";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { makeStyles } from "@material-ui/core/styles";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
 
@@ -71,6 +71,7 @@ export default function Checkout() {
   const { userData, bookingDetails, setUserData } = useContext(AuthContext);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [validBalance, setBalance] = useState(true);
+  const [promoCode, setPromoCode] = useState(false);
   // console.log(userData);
   // console.log(bookingDetails);
   const services = bookingDetails.details.location.servicesProvided;
@@ -115,7 +116,19 @@ export default function Checkout() {
   if (valet) counter += 1;
 
   var cost = 100 + 25 * numberOfHours + 25 * counter;
+  if (promoCode) cost -= 50;
+  useEffect(() => {
+    User.map((x) => {
+      if (x.username === userData.username) {
+        // x.bookings.push(userBookingData);
+        x.numberOfVisits = x.numberOfVisits + 1;
 
+        if (x.numberOfVisits >= 5) {
+          setPromoCode(true);
+        }
+      }
+    });
+  }, []);
   const handleConfirm = () => {
     if (userData.balance <= cost) {
       setBalance(false);
@@ -289,6 +302,11 @@ export default function Checkout() {
       {!validBalance && (
         <Typography variant="h5" sx={{ color: "#ff0000" }}>
           Insufficient Balance.
+        </Typography>
+      )}
+      {promoCode && (
+        <Typography variant="h5" sx={{ color: "#0db518" }}>
+          PromoCode Applied
         </Typography>
       )}
     </div>

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   Box,
   Card,
@@ -47,6 +47,19 @@ export default function OutlinedCard(props) {
   const [isPromoCode, setIsPromoCode] = useState(false);
   const { setSlotToEdit, userData, setWhatToShow, setBookingDetails } =
     useContext(AuthContext);
+  useEffect(() => {
+    User.map((x) => {
+      if (x.username === userData.username) {
+        // x.bookings.push(userBookingData);
+        x.numberOfVisits = x.numberOfVisits + 1;
+
+        if (x.numberOfVisits >= 5) {
+          setIsPromoCode(true);
+        }
+      }
+    });
+  }, []);
+
   const bookSlot = () => {
     const inputData = {
       name: userData.name,
@@ -67,19 +80,9 @@ export default function OutlinedCard(props) {
     const userBookingData = {
       details: props.details,
     };
-    User.map((x) => {
-      if (x.username === userData.username) {
-        // x.bookings.push(userBookingData);
-        x.numberOfVisits += 1;
-        if (x.numberOfVisits === 5) {
-          setIsPromoCode(true);
-          x.numberOfVisits = 0;
-        }
-      }
-    });
-    // console.log(DataLocations);
-    // console.log(User);
-    // console.log(userBookingData);
+
+    console.log(isPromoCode);
+
     setIsConfirmed(true);
     setBookingDetails(userBookingData);
 
@@ -95,30 +98,39 @@ export default function OutlinedCard(props) {
           justifyContent="flex-start"
           alignItems="flex-start"
         >
-          <Grid item xs={6}>
+          <Grid item xs={9}>
             <Typography variant="h4" sx={{ color: "#ffffff" }}>
               Location: {props.details.location.name}
             </Typography>
           </Grid>
           <Grid
             item
-            xs={6}
-            sx={{ textAlign: "right", marginBottom: "15px", color: "#ffffff" }}
+            xs={3}
+            sx={{ textAlign: "right", marginBottom: "25px", color: "#229EF3" }}
           >
             <Typography variant="h3">{props.details.slot.number}</Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+            <Typography
+              variant="h5"
+              sx={{ color: "#ffffff", marginBottom: "20px" }}
+            >
               Address: {props.details.location.address}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h5" sx={{ color: "#ffffff" }}>
+            <Typography
+              variant="h5"
+              sx={{ color: "#ffffff", marginBottom: "20px" }}
+            >
               Owner: {props.details.location.owner}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="h6" sx={{ color: "#ffffff" }}>
+            <Typography
+              variant="h6"
+              sx={{ color: "#ffffff", marginBottom: "20px" }}
+            >
               Max Time Available: {props.details.location.maxTime} hours
             </Typography>
           </Grid>
@@ -153,6 +165,14 @@ export default function OutlinedCard(props) {
                 readOnly
               />
             </Typography>
+            {isPromoCode && (
+              <Typography
+                variant="h6"
+                sx={{ marginLeft: "10px", color: "#229EF3" }}
+              >
+                PromoCode: OOPS50
+              </Typography>
+            )}
           </Grid>
 
           {/* <Grid item xs={6} sx={{ textAlign: "right" }}>
