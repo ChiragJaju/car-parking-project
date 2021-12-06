@@ -4,7 +4,15 @@ const AuthContext = createContext();
 
 function AuthContextProvider(props) {
   const [whatToShow, setWhatToShow] = useState("location");
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState({
+    username: "",
+    password: "google",
+    name: "",
+    bookings: [],
+    email: "",
+    numberOfVisits: 0,
+    balance: 100,
+  });
   const [slotToEdit, setSlotToEdit] = useState();
   const [slotToDelete, setSlotToDelete] = useState();
   const [locationToEdit, setLocationToEdit] = useState();

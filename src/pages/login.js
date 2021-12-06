@@ -1,5 +1,5 @@
 // useState from React
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import "./login.css";
@@ -20,7 +20,7 @@ import { DataLocations, User, Workers } from "../components/Data";
 import styled from "styled-components";
 import { auth, provider } from "../firebase/firebase";
 import AuthContext from "../context/AuthContext";
-
+import image from "../parking.jpg";
 const theme = createTheme();
 
 const useStyles = makeStyles((theme) => ({
@@ -74,7 +74,20 @@ export default function Login(props) {
   //   }
   // `;
   // check if pass matches with corresponding email
-
+  useEffect(() => {
+    handleClick();
+  }, []);
+  const handleClick = async () => {
+    const response = await axios.post("http://localhost:8080/update", {
+      data: DataLocations,
+    });
+    await axios.post("http://localhost:8080/update/users", {
+      data: User,
+    });
+    await axios.post("http://localhost:8080/update/workers", {
+      data: Workers,
+    });
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -116,7 +129,8 @@ export default function Login(props) {
     }
 
     // console.log(userData);
-    // const response = await axios.post("localhost:8080/");
+    const response = await axios.post("localhost:8080/");
+    console.log(response);
     //Axios send data
     //receive response
     //according to that set PassMatch
@@ -136,7 +150,8 @@ export default function Login(props) {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage:
+              "url(https://images.unsplash.com/photo-1573348722427-f1d6819fdf98?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80)",
             backgroundRepeat: "no-repeat",
             backgroundColor: "#131419",
             backgroundSize: "cover",

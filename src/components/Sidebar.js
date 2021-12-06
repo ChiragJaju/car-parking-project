@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -22,9 +22,25 @@ import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { Link } from "react-router-dom";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import AuthContext from "../context/AuthContext";
+import { DataLocations, User, Workers } from "../components/Data";
+import axios from "axios";
 const drawerWidth = 240;
 
 export default function PermanentDrawerLeft(props) {
+  useEffect(() => {
+    handleClick();
+  });
+  const handleClick = async () => {
+    const response = await axios.post("http://localhost:8080/update", {
+      data: DataLocations,
+    });
+    await axios.post("http://localhost:8080/update/users", {
+      data: User,
+    });
+    await axios.post("http://localhost:8080/update/workers", {
+      data: Workers,
+    });
+  };
   const { whatToShow, setWhatToShow } = useContext(AuthContext);
   const workerClick = () => {
     setWhatToShow("worker");
@@ -106,12 +122,6 @@ export default function PermanentDrawerLeft(props) {
             </ListItemText>
           </ListItem>
 
-          <ListItem button onClick={carClick}>
-            <ListItemIcon>
-              <DirectionsCarIcon sx={{ color: "#229EF3" }}></DirectionsCarIcon>
-            </ListItemIcon>
-            <ListItemText sx={{ color: "#FFFFFF" }}>Manage Cars</ListItemText>
-          </ListItem>
           <Link to="/logout" style={{ textDecoration: "none" }}>
             <ListItem button>
               <ListItemIcon>

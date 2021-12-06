@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -14,14 +14,30 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import AppBar from "@mui/material/AppBar";
+import { DataLocations, User, Workers } from "../components/Data";
 import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { Link } from "react-router-dom";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import AuthContext from "../context/AuthContext";
+import axios from "axios";
 const drawerWidth = 240;
 
 export default function PermanentDrawerLeft(props) {
+  useEffect(() => {
+    handleClick();
+  });
+  const handleClick = async () => {
+    const response = await axios.post("http://localhost:8080/update", {
+      data: DataLocations,
+    });
+    await axios.post("http://localhost:8080/update/users", {
+      data: User,
+    });
+    await axios.post("http://localhost:8080/update/workers", {
+      data: Workers,
+    });
+  };
   const { whatToShow, setWhatToShow, userData } = useContext(AuthContext);
   // console.log(userData);
   const BookClick = () => {

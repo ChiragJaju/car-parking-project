@@ -53,7 +53,7 @@ const Location = (props) => {
       <EditLocation
         allLocations={allLocations}
         setLocations={setAllLocations}
-        setWhatSlot={setWhatLocation}
+        setWhatLocation={setWhatLocation}
         // slotsToShow={props.slotsToShow}
         // setSlotsToShow={props.setSlotsToShow}
       />

@@ -21,6 +21,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { makeStyles } from "@material-ui/core/styles";
 import { useContext, useState } from "react";
 import AuthContext from "../../context/AuthContext";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -71,7 +72,7 @@ export default function Checkout() {
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [validBalance, setBalance] = useState(true);
   // console.log(userData);
-  console.log(bookingDetails);
+  // console.log(bookingDetails);
   const services = bookingDetails.details.location.servicesProvided;
   const d = bookingDetails.details;
   const aS = {
@@ -126,10 +127,16 @@ export default function Checkout() {
       // setUserData(temp);
       // console.log(userData);
       // userData.balance -= cost;
+      const res = axios.post("http://localhost:8080/confirm", {
+        email: userData.email,
+        checkin: d.inputTime.checkIn.toLocaleTimeString("en-US"),
+        checkout: d.inputTime.checkOut.toLocaleTimeString("en-US"),
+      });
+      console.log(res);
       User.map((x) => {
         if (x.username === userData.username) {
           bookingDetails.details.cost = cost;
-          x.bookings.push(bookingDetails);
+          x.bookings.push({ ...bookingDetails, ...state });
           x.balance -= cost;
         }
       });
@@ -267,7 +274,7 @@ export default function Checkout() {
               marginTop: "20px",
               marginBottom: "20px",
             }}
-          />{" "}
+          />
           <Typography
             variant="h5"
             sx={{ color: "#0db518", marginBottom: "20px" }}

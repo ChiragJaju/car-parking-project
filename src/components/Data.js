@@ -73,7 +73,7 @@ export const User = [
   {
     name: "Ajay",
     username: "abc",
-    email: "-",
+    email: "cjaju15@gmail.com",
     password: "abc",
     bookings: [
       // {

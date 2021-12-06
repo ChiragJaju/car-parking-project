@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import "./login.css";
+import { auth, provider } from "../firebase/firebase";
 import {
   Avatar,
   Button,
@@ -12,10 +13,11 @@ import {
   Container,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-
+import { User } from "../components/Data";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
+import AuthContext from "../context/AuthContext";
 const theme = createTheme();
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp(props) {
   const classes = useStyles();
-
+  const { setWhatToShow, setLoggedIn, setUserData } = useContext(AuthContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -50,9 +52,13 @@ export default function SignUp(props) {
   const [mobileNumber, setMobileNumber] = useState("");
   const [carNumber, setCarNumber] = useState("");
   const [isDataValid, setIsDataValid] = useState();
-
+  const [isButton, setIsButton] = useState(false);
+  const [otp, setOtp] = useState();
   const [doesPassMatch, setDoesPassMatch] = useState();
-
+  const [wrongOtp, setWrongOtp] = useState(false);
+  const handleOtp = (e) => {
+    setOtp(e.target.value);
+  };
   const handleFirstName = (event) => {
     setFirstName(event.target.value);
   };
@@ -82,6 +88,46 @@ export default function SignUp(props) {
     setCarNumber(event.target.value);
   };
 
+  const checkOtp = (event) => {
+    event.preventDefault();
+    console.log(otp);
+    if (otp === "462900") {
+      const sendData = {
+        name: firstName + lastName,
+        username,
+        email,
+        password,
+        bookings: [],
+        numberOfVisits: 0,
+        balance: 1000,
+      };
+
+      User.push(sendData);
+      props.setLoggedIn(true);
+      setDoesPassMatch(true);
+    } else {
+      setWrongOtp(true);
+    }
+  };
+  const googleSignIn = async () => {
+    const res = await auth.signInWithPopup(provider).catch(alert);
+    props.setLoggedIn("user");
+    setWhatToShow("BookSlot");
+    const data = {
+      username: res.user.displayName,
+      password: "google",
+      name: res.user.displayName,
+      bookings: [],
+      email: res.user.email,
+      numberOfVisits: 0,
+      balance: 100,
+    };
+    setUserData(data);
+    User.push(data);
+    console.log(User);
+
+    // console.log(res.user.displayName);
+  };
   const WhiteBorderTextField = styled(TextField)`
     & label.Mui-focused {
       color: white;
@@ -118,14 +164,19 @@ export default function SignUp(props) {
       carNumber,
     };
     const sendData = {
-      l_name: lastName,
-      email: email,
-      mobile: mobileNumber,
-      u_name: username,
-      pwd: password,
+      name: firstName + lastName,
+      username,
+      email,
+      password,
+      bookings: [],
+      numberOfVisits: 0,
+      balance: 1000,
     };
-    // const res = await axios.post("http://localhost:8080/user/add/A", sendData);
-    // console.log(res);
+
+    // User.push(sendData);
+    setIsButton(true);
+    const res = await axios.post("http://localhost:8080/otp/cjaju15@gmail.com");
+    console.log(res);
 
     //send all this data
     //get response whether username,email and phonenumber is unique
@@ -135,9 +186,11 @@ export default function SignUp(props) {
     //  isDataValid(true);
     // }
     // else {isDataValid(false)}
-    props.setLoggedIn(true);
-    setDoesPassMatch(true);
-    console.log(data);
+
+    // props.setLoggedIn(true);
+    // setDoesPassMatch(true);
+
+    // console.log(data);
   };
 
   return (
@@ -159,12 +212,7 @@ export default function SignUp(props) {
           <Typography component="h1" variant="h5" sx={{ color: "#ffffff" }}>
             Sign up
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" noValidate onSubmit={checkOtp} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <WhiteBorderTextField
@@ -303,13 +351,45 @@ export default function SignUp(props) {
               </Grid>
             </Grid>
             <Button
-              type="submit"
+              onClick={handleSubmit}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
             </Button>
+            {isButton && (
+              <>
+                <TextField
+                  required
+                  fullWidth
+                  value={otp}
+                  onChange={handleOtp}
+                  autoComplete="off"
+                  InputLabelProps={{ style: { color: "#ffffff" } }}
+                  sx={{ input: { color: "#ffffff" }, marginBottom: "20px" }}
+                  id="Name"
+                  label="OTP"
+                  name="Name"
+                ></TextField>
+                <Button
+                  fullWidth
+                  type="submit"
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Confirm Signup
+                </Button>
+              </>
+            )}
+            {wrongOtp && (
+              <Typography
+                variant="h5"
+                sx={{ color: "#ff0000", marginBottom: "10px" }}
+              >
+                Wrong Otp!
+              </Typography>
+            )}
             {doesPassMatch === false && (
               <Typography component="h3" variant="h6" color="error">
                 Password doesn't Match!
@@ -329,9 +409,12 @@ export default function SignUp(props) {
           >
             Or
           </Typography>
-          <a href="https://localhost:3000/auth/google" id="link">
-            {"Login with "} &nbsp;<i with i class="fab fa-google"></i>
-          </a>
+          <Typography variant="body2" sx={{ color: "#ffff" }}>
+            {/* <a href="https://localhost:3000/auth/google" id="link">
+                    {"Login with "} &nbsp;<i with i class="fab fa-google"></i>
+                  </a> */}
+            <Button onClick={googleSignIn}>Login with Google</Button>
+          </Typography>
         </Box>
       </Container>
     </ThemeProvider>
