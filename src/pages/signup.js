@@ -105,9 +105,9 @@ export default function SignUp(props) {
         numberOfVisits: 0,
         balance: 1000,
       };
-
+      setUserData(sendData);
       User.push(sendData);
-      props.setLoggedIn(true);
+      props.setLoggedIn("user");
       setDoesPassMatch(true);
     } else {
       setWrongOtp(true);
@@ -222,7 +222,7 @@ export default function SignUp(props) {
           <Typography component="h1" variant="h5" sx={{ color: "#ffffff" }}>
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={checkOtp} sx={{ mt: 3 }}>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -384,7 +384,8 @@ export default function SignUp(props) {
                 ></TextField>
                 <Button
                   fullWidth
-                  type="submit"
+                  // type="submit"
+                  onClick={checkOtp}
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
