@@ -7,4 +7,6 @@ public class Worker {
     String name;
     int salary;
     String dateOfJoin;
+    String username;
+    String password;
 }

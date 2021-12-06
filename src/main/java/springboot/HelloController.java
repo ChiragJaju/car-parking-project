@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 public class HelloController {
     static com.fasterxml.jackson.databind.ObjectMapper Obj = new ObjectMapper();
     public UserDAO dao = new UserDAO();
@@ -29,25 +30,25 @@ public class HelloController {
 //        User user= new Gson().fromJson(jsonData,User.class);
 //        return dao.addUser(user,location,jsonData);
 //    }
-    @GetMapping("/login")
-    public String login(@RequestBody Map<String,String> data) throws JsonProcessingException {
-        User user= Building.login(data.get("username"),data.get("pwd"));
-        if(user== null) {
-            return "{"+"\"value\":\"Failed\""+"}";
-        }
-        else return Obj.writeValueAsString(user);
-    }
+//    @GetMapping("/login")
+//    public String login(@RequestBody Map<String,String> data) throws JsonProcessingException {
+//        User user= Building.login(data.get("username"),data.get("pwd"));
+//        if(user== null) {
+//            return "{"+"\"value\":\"Failed\""+"}";
+//        }
+//        else return Obj.writeValueAsString(user);
+//    }
     @PostMapping("/otp/{email}")
     public String otp(@PathVariable String email) throws IOException {
         Mailer k = new Mailer();
-        k.sendMail(email,"OTP: 3469");
+        k.sendMail(email,"OTP: 462900");
         return "{"+"\"value\""+"\"Done\""+"}";
     }
     @PostMapping("/update/users")
     public String datalocations(@RequestBody String data) throws firebase4j.error.JacksonUtilityException, firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException {
         Users p= new Gson().fromJson(data,Users.class);
-        Building.users=p.data;
-        System.out.println(p.data.get(0).bookings.get(0).details.slot.number);
+        Application.k.users=p.data;
+
         Application.update();
         return "Done";
     }
@@ -63,7 +64,7 @@ public class HelloController {
     public String update_workers(@RequestBody String data)
     {
         workers p = new Gson().fromJson(data,workers.class);
-        Building.workers_global=p.data;
+        Application.k.workers_global=p.data;
         return "Done";
     }
     @PostMapping("/confirm")

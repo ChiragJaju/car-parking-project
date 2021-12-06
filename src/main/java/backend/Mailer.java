@@ -1,9 +1,10 @@
 package backend;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.sendgrid.*;
 
 import java.io.IOException;
-
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Mailer {
     public void sendMail(String recMail, String msg) throws IOException {
         String senderMail = "trial.sendgrid@gmail.com";

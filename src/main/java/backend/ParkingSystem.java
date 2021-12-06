@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ParkingSystem {
+    public ArrayList<User> users = new ArrayList<>();
+    public ArrayList<Worker> workers_global=new ArrayList<>();
     public ArrayList<Building> DataLocations = new ArrayList<>();
     public void updateFirebase() throws JsonProcessingException, firebase4j.error.FirebaseException, firebase4j.error.JacksonUtilityException, UnsupportedEncodingException {
         ObjectMapper k = new ObjectMapper();
