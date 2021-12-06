@@ -2,6 +2,7 @@ package springboot;
 
 import backend.Building;
 import backend.Mailer;
+import backend.ParkingSystem;
 import backend.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +16,7 @@ import inputclasses.workers;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+import java.util.Random;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -41,8 +43,10 @@ public class HelloController {
     @PostMapping("/otp/{email}")
     public String otp(@PathVariable String email) throws IOException {
         Mailer k = new Mailer();
-        k.sendMail(email,"OTP: 462900");
-        return "{"+"\"value\""+"\"Done\""+"}";
+        Random rand = new Random();
+        int rand_int1 = rand.nextInt(100000);
+        k.sendMail(email,String.valueOf(rand_int1));
+        return String.valueOf(rand_int1);
     }
     @PostMapping("/update/users")
     public String datalocations(@RequestBody String data) throws firebase4j.error.JacksonUtilityException, firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException {
@@ -60,6 +64,15 @@ public class HelloController {
         Application.update();
         return "Done";
     }
+//    @GetMapping("/update")
+//    public String update_users() throws firebase4j.error.JacksonUtilityException, firebase4j.error.FirebaseException, UnsupportedEncodingException, JsonProcessingException
+//    {
+//        String data=Application.k.getFirebase();
+//        Application.k=new Gson().fromJson(data, ParkingSystem.class);
+//        Application.k.DataLocations=p.data;
+//        ;
+//        return "Done";
+//    }
     @PostMapping("/update/workers")
     public String update_workers(@RequestBody String data)
     {
