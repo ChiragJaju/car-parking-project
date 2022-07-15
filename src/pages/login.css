@@ -1,0 +1,22 @@
+#link {
+  color: #fff;
+}
+a:link {
+  text-decoration: none;
+  color: "#ffff";
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  font-size: 15px;
+}
+
+a:active {
+  text-decoration: none;
+}
+#username {
+  border: "#ffffff";
+}

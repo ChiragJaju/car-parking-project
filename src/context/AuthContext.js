@@ -3,9 +3,41 @@ import React, { createContext, useState } from "react";
 const AuthContext = createContext();
 
 function AuthContextProvider(props) {
-  const [test, setTest] = useState("Works");
+  const [whatToShow, setWhatToShow] = useState("location");
+  const [userData, setUserData] = useState({
+    username: "",
+    password: "google",
+    name: "",
+    bookings: [],
+    email: "",
+    numberOfVisits: 0,
+    balance: 100,
+  });
+  const [slotToEdit, setSlotToEdit] = useState();
+  const [slotToDelete, setSlotToDelete] = useState();
+  const [locationToEdit, setLocationToEdit] = useState();
+  const [locationToDelete, setLocationToDelete] = useState();
+  const [bookingDetails, setBookingDetails] = useState();
+
   return (
-    <AuthContext.Provider value={{ test }}>
+    <AuthContext.Provider
+      value={{
+        whatToShow,
+        setWhatToShow,
+        userData,
+        setUserData,
+        slotToEdit,
+        setSlotToEdit,
+        slotToDelete,
+        setSlotToDelete,
+        locationToEdit,
+        setLocationToEdit,
+        locationToDelete,
+        setLocationToDelete,
+        bookingDetails,
+        setBookingDetails,
+      }}
+    >
       {props.children}
     </AuthContext.Provider>
   );
